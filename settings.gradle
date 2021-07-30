@@ -1,0 +1,8 @@
+rootProject.name = 'dmoim-api'
+include 'dmoim-user-service'
+include 'dmoim-board-service'
+include 'api-gateway'
+include 'config-service'
+include 'service-registry'
+include 'config-server'
+
