@@ -7,7 +7,6 @@ import org.springframework.data.r2dbc.repository.config.EnableR2dbcRepositories;
 import org.springframework.web.reactive.config.EnableWebFlux;
 
 @SpringBootApplication
-@EnableR2dbcAuditing
 @EnableR2dbcRepositories
 @EnableWebFlux
 public class DmoimUserServiceApplication {

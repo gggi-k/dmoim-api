@@ -1,4 +1,4 @@
-package kr.dmoim.config;
+package kr.dmoim.config.message;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;

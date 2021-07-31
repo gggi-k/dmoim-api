@@ -1,4 +1,4 @@
-package kr.dmoim.config;
+package kr.dmoim.config.swagger;
 
 import org.springframework.context.annotation.Configuration;
 

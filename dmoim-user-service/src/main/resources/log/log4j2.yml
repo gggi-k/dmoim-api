@@ -26,7 +26,7 @@ Configuration:
         datePattern: DEFAULT
   Loggers:
     Root:
-      level: warn
+      level: info
       AppenderRef:
       - ref: ConsoleLog
 #      - ref: FileLog
