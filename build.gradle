@@ -10,6 +10,7 @@ buildscript {
         classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
         classpath "io.spring.gradle:dependency-management-plugin:${springDependencyVersion}"
     }
+
 }
 
 allprojects {
@@ -24,6 +25,7 @@ subprojects {
 
     sourceCompatibility = 11
     targetCompatibility = 11
+
 
     bootJar {
         enabled = false
@@ -83,10 +85,14 @@ project(':dmoim-user-service') {
         implementation 'org.springframework.boot:spring-boot-starter-validation'
         implementation 'org.springframework.boot:spring-boot-starter-webflux'
 
-        implementation "io.springfox:springfox-boot-starter:3.0.0"
+        implementation 'org.springdoc:springdoc-openapi-webflux-ui:1.5.10'
 
         runtimeOnly 'io.r2dbc:r2dbc-h2'
         testImplementation 'io.projectreactor:reactor-test'
+    }
+
+    springBoot {
+        buildInfo()
     }
 }
 

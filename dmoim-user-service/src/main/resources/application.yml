@@ -1,21 +1,25 @@
 server:
   port: 9000
+  address: localhost
 
 spring:
+  application:
+    name: dmoim-user-service
   messages:
-    basename:
+    basename: i18n/message
   r2dbc:
     name: h2
     username: user
   webflux:
+    base-path: /api
     format:
+      date-time: yyyy-MM-dd HH:mm:ss
       date: iso
+      time: HH:mm:ss
 
 logging:
-  file:
-    path: classpath:log/
+  config: classpath:log/log4j2.yml
 
-springfox:
-  documentation:
-    swagger-ui:
-      base-url:
+springdoc:
+  swagger-ui:
+    path: /api-docs.html
