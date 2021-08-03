@@ -1,0 +1,34 @@
+server:
+  port: 9000
+  address: localhost
+  error:
+    whitelabel:
+      enabled: false
+
+spring:
+  application:
+    name: dmoim-user-service
+  messages:
+    basename: i18n/message
+  webflux:
+    base-path: /api
+    format:
+      date-time: yyyy-MM-dd HH:mm:ss
+      date: iso
+      time: HH:mm:ss
+  r2dbc:
+    name: h2
+    username: user
+  sql:
+    init:
+      username: user
+      platform: h2
+      schema-locations: classpath:sql/schema-h2.sql
+
+logging:
+  config: classpath:log/log4j2.yml
+
+springdoc:
+  swagger-ui:
+    path: /
+

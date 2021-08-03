@@ -26,7 +26,6 @@ subprojects {
     sourceCompatibility = 11
     targetCompatibility = 11
 
-
     bootJar {
         enabled = false
     }
@@ -59,44 +58,49 @@ subprojects {
     }
 }
 
-project(':api-gateway') {
+project(':dmoim-core') {
+    dependencies {
+        implementation 'org.springframework.boot:spring-boot-starter-webflux'
+    }
+}
+
+project(':dmoim-cloud:api-gateway') {
     dependencies {
         //implementation 'org.springframework.cloud:spring-cloud-starter-gateway'
     }
 }
 
-project(':config-server') {
+project(':dmoim-cloud:config-server') {
     dependencies {
         //implementation 'org.springframework.cloud:spring-cloud-config-server'
     }
 }
 
-project(':dmoim-board-service') {
+project(':dmoim-cloud:service-registry') {
     dependencies {
     }
 }
 
-project(':dmoim-user-service') {
+project(':dmoim-app:dmoim-api-user') {
     dependencies {
+        implementation project(':dmoim-core')
+        compile project(':dmoim-domain:dmoim-domain-user')
+
         //implementation 'org.springframework.boot:spring-boot-starter-actuator'
         //implementation 'org.springframework.boot:spring-boot-starter-cache'
         //implementation 'org.springframework.cloud:spring-cloud-starter-config'
-        implementation 'org.springframework.boot:spring-boot-starter-data-r2dbc'
-        implementation 'org.springframework.boot:spring-boot-starter-validation'
-        implementation 'org.springframework.boot:spring-boot-starter-webflux'
-
+        //implementation 'org.springframework.boot:spring-boot-starter-hateoas'
+        //implementation 'org.springframework.boot:spring-boot-starter-webflux'
         implementation 'org.springdoc:springdoc-openapi-webflux-ui:1.5.10'
-
-        runtimeOnly 'io.r2dbc:r2dbc-h2'
         testImplementation 'io.projectreactor:reactor-test'
-    }
-
-    springBoot {
-        buildInfo()
     }
 }
 
-project(':service-registry') {
+project(':dmoim-domain:dmoim-domain-user') {
     dependencies {
+        implementation project(':dmoim-core')
+        compile 'org.springframework.boot:spring-boot-starter-data-r2dbc'
+        compile 'org.springframework.boot:spring-boot-starter-validation'
+        runtimeOnly 'io.r2dbc:r2dbc-h2'
     }
 }
