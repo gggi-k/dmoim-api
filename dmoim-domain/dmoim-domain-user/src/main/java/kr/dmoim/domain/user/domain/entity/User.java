@@ -22,21 +22,21 @@ public class User {
 
     private String nickName;
 
-    private Boolean remYn;
+    private Boolean deleteYn;
 
     @Version
     private Long version;
 
     @CreatedBy
-    private String regId;
+    private String createBy;
 
     @CreatedDate
-    private LocalDateTime regDt;
+    private LocalDateTime createDateTime;
 
     @LastModifiedBy
-    private String updId;
+    private String updateBy;
 
     @LastModifiedDate
-    private LocalDateTime updDt;
+    private LocalDateTime updateDateTime;
 
 }

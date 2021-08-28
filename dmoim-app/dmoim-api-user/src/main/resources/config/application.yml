@@ -1,0 +1,22 @@
+server:
+  port: 9000
+  address: localhost
+  error:
+    whitelabel:
+      enabled: false
+
+spring:
+  application:
+    name: dmoim-user-service
+  webflux:
+    base-path: /api
+    format:
+      date-time: yyyy-MM-dd HH:mm:ss
+      date: iso
+      time: HH:mm:ss
+
+springdoc:
+  swagger-ui:
+    path: /
+  default-consumes-media-type: application/json
+  default-produces-media-type: application/json

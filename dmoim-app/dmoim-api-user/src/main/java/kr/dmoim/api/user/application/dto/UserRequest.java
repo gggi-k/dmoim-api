@@ -1,4 +1,4 @@
-package kr.dmoim.domain.user.dto;
+package kr.dmoim.api.user.application.dto;
 
 import lombok.Getter;
 

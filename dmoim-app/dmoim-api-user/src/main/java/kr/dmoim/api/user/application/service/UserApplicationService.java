@@ -1,7 +1,7 @@
-package kr.dmoim.api.user.application;
+package kr.dmoim.api.user.application.service;
 
+import kr.dmoim.api.user.application.dto.UserRequest;
 import kr.dmoim.domain.user.domain.entity.User;
-import kr.dmoim.domain.user.dto.UserRequest;
 import kr.dmoim.domain.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
