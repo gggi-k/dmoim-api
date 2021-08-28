@@ -7,6 +7,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import kr.dmoim.api.user.application.service.UserApplicationService;
 import kr.dmoim.api.user.application.dto.UserRequest;
 import kr.dmoim.domain.user.domain.entity.User;
+import kr.dmoim.domain.user.domain.service.UserDomainService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.context.support.MessageSourceAccessor;
@@ -14,6 +15,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -34,6 +36,7 @@ import javax.validation.Valid;
 public class UserController {
 
     private final UserApplicationService userApplicationService;
+    private final UserDomainService userDomainService;
 
     private final MessageSourceAccessor messageSourceAccessor;
 
@@ -51,17 +54,17 @@ public class UserController {
         return userApplicationService.findById(userId);
     }
 
-    @RequestMapping(value = "/duplicate/{userId}", method = RequestMethod.HEAD)
+    @RequestMapping(value = "/duplicate/{email}", method = RequestMethod.HEAD)
     @ResponseStatus(HttpStatus.OK)
-    @Operation(summary = "사용자아이디 중복확인",
+    @Operation(summary = "사용자 이메일 중복확인",
         responses = {
-            @ApiResponse(responseCode = "200", description = "중복된 아이디가 존재하지않습니다"),
-            @ApiResponse(responseCode = "409", description = "중복된 아이디가 존재합니다")
+            @ApiResponse(responseCode = "200", description = "중복된 이메일이 존재하지않습니다"),
+            @ApiResponse(responseCode = "409", description = "중복된 이메일 존재합니다")
         }
     )
-    public void isDuplicateByUserId (@Parameter(description = "유저아이디")
-                                     @PathVariable final String userId) {
-
+    public void isDuplicateByUserId (@Parameter(description = "이메일")
+                                     @PathVariable final String email) {
+        userDomainService.isDuplicateByEmail(email);
     }
 
     @PostMapping
@@ -74,16 +77,23 @@ public class UserController {
     @PutMapping("/{userId}")
     @ResponseStatus(HttpStatus.CREATED)
     @Operation(summary = "사용자 수정")
-    public String updateById (@Parameter(description = "유저아이디")
-                              @PathVariable final String userId) {
+    public Long updateById (@Parameter(description = "유저아이디")
+                              @PathVariable final Long userId) {
         return userId;
+    }
+
+
+    @PatchMapping("/{userId}/password")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @Operation(summary = "사용자 비밀번호 변경")
+    public void changePassword(@Parameter(description = "유저아이디")
+                                 @PathVariable Long userId) {
     }
 
     @DeleteMapping("/{userId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @Operation(summary = "사용자 삭제")
-    public String removeById (@Parameter(description = "유저아이디")
-                              @PathVariable final String userId) {
-        return userId;
+    public void removeById (@Parameter(description = "유저아이디")
+                              @PathVariable final Long userId) {
     }
 }

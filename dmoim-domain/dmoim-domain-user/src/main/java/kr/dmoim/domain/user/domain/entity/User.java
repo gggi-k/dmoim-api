@@ -4,6 +4,8 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.ToString;
 import org.springframework.data.annotation.*;
+import org.springframework.data.convert.ReadingConverter;
+import org.springframework.data.relational.core.mapping.Column;
 import org.springframework.data.relational.core.mapping.Table;
 
 import java.time.LocalDateTime;
@@ -12,31 +14,42 @@ import java.time.LocalDateTime;
 @Builder
 @ToString
 @Table("USER_TB")
-@AccessType(AccessType.Type.FIELD)
 public class User {
 
     @Id
+    @Column(value = "USER_ID")
     private final Long userId;
 
+    @Column(value = "EMAIL")
+    private String email;
+
+    @Column(value = "PASSWORD")
     private String password;
 
+    @Column(value = "NICK_NAME")
     private String nickName;
 
+    @Column(value = "DELETE_YN")
     private Boolean deleteYn;
 
     @Version
+    @Column(value = "VERSION")
     private Long version;
 
     @CreatedBy
-    private String createBy;
+    @Column(value = "CREATED_BY")
+    private Long createdBy;
 
     @CreatedDate
-    private LocalDateTime createDateTime;
+    @Column(value = "CREATED_AT")
+    private LocalDateTime createdAt;
 
     @LastModifiedBy
-    private String updateBy;
+    @Column(value = "UPDATED_BY")
+    private Long updatedBy;
 
     @LastModifiedDate
-    private LocalDateTime updateDateTime;
+    @Column(value = "UPDATED_AT")
+    private LocalDateTime updatedAt;
 
 }

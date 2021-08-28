@@ -16,7 +16,10 @@ spring:
       time: HH:mm:ss
 
 springdoc:
-  swagger-ui:
-    path: /
   default-consumes-media-type: application/json
   default-produces-media-type: application/json
+  swagger-ui:
+    use-root-path: true
+    operations-sorter: method
+    filter: true
+    try-it-out-enabled: true

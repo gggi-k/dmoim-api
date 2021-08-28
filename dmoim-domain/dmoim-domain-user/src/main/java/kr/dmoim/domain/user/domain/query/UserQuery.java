@@ -9,5 +9,7 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true)
 public class UserQuery {
 
+    private String email;
     private String nickName;
+
 }

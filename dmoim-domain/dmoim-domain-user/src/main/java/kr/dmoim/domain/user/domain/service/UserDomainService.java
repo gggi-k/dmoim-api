@@ -12,7 +12,7 @@ public class UserDomainService {
 
     private final UserRepository userRepository;
 
-    public void isDuplicateByUserId(final Long id) {
-        userRepository.existsById(id);
+    public void isDuplicateByEmail(final String email) {
+        userRepository.existsByEmail(email);
     }
 }
