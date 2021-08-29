@@ -5,16 +5,16 @@ import kr.dmoim.core.exception.global.base.BaseException;
 import lombok.NoArgsConstructor;
 
 @NoArgsConstructor
-public class DuplicateException extends BaseException {
+public class NotFoundException extends BaseException {
 
-    private static final long serialVersionUID = 2561415309670738111L;
+    private static final long serialVersionUID = -7105189678489695490L;
 
-    public DuplicateException(String message) {
+    public NotFoundException(String message) {
         super(message);
     }
 
     @Override
     public ErrorCode getExceptionCode() {
-        return ErrorCode.DUPLICATE_RESOURCE;
+        return ErrorCode.NOT_FOUND_RESOURCE;
     }
 }

@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 import lombok.experimental.Accessors;
+import org.springframework.validation.annotation.Validated;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
@@ -23,19 +24,19 @@ import javax.validation.constraints.Size;
 @ToString
 public class UserRequest {
 
-    @NotBlank
+    @NotBlank(groups = UserValid.Create.class)
     @Email
     private String email;
 
     @NotBlank
-    @Size
+    @Size(groups = UserValid.Create.class)
     private String nickName;
 
     @NotBlank
-    @Size
+    @Size(groups = UserValid.Create.class)
     @Pattern(regexp = "")
     private String password;
 
-    @NotNull
+    @NotNull(groups = UserValid.Update.class)
     private Long version;
 }
