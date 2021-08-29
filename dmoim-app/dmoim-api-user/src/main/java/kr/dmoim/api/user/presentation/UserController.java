@@ -12,6 +12,7 @@ import kr.dmoim.api.user.application.dto.UserViews;
 import kr.dmoim.api.user.application.service.UserApplicationService;
 import kr.dmoim.core.exception.global.DuplicateException;
 import kr.dmoim.core.exception.global.base.BaseException;
+import kr.dmoim.domain.user.domain.entity.User;
 import kr.dmoim.domain.user.domain.service.UserDomainService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -54,11 +55,11 @@ public class UserController {
 
     @GetMapping("/{userId}")
     @ResponseStatus(HttpStatus.OK)
-    @JsonView(UserViews.class)
+    @JsonView(UserViews.List.class)
     @Operation(summary = "사용자 조회")
-    public Mono<UserResponse> findById (@PathVariable final Long userId) {
-        if(true) throw new DuplicateException();
-        return userApplicationService.findById(userId);
+    public UserResponse findById (@PathVariable final Long userId) {
+        return UserResponse.builder().build();
+        /*return userApplicationService.findById(userId);*/
     }
 
     @RequestMapping(value = "/duplicate/{email}", method = RequestMethod.HEAD)

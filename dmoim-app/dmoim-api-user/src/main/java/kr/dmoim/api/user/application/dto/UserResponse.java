@@ -12,36 +12,42 @@ import lombok.ToString;
 import java.time.LocalDateTime;
 
 @Getter
-@Builder(access = AccessLevel.PRIVATE)
+@Builder
 @ToString
 public class UserResponse {
 
-    @JsonView(UserViews.class)
+    @JsonView(UserViews.List.class)
     @Schema(description = "사용자아이디")
     private final Long userId;
 
+    @JsonView(UserViews.List.class)
     @Schema(description = "이메일")
     private final String email;
 
+    @JsonView(UserViews.List.class)
     @Schema(description = "닉네임")
     private final String nickName;
 
+    @JsonView(UserViews.List.class)
     @Schema(description = "삭제여부")
     private final Boolean deleteYn;
 
+    @JsonView(UserViews.List.class)
     @Schema(description = "버전")
     private final Long version;
 
+    @JsonView(UserViews.List.class)
     @Schema(description = "생성자")
     private final Long createdBy;
 
+    @JsonView(UserViews.List.class)
     @Schema(description = "생성일시")
     private final LocalDateTime createdAt;
 
-    @Schema(description = "갱신자")
+    /*@Schema(description = "갱신자")*/
     private final Long updatedBy;
 
-    @Schema(description = "갱신일시")
+    /*@Schema(description = "갱신일시")*/
     private final LocalDateTime updatedAt;
 
 
