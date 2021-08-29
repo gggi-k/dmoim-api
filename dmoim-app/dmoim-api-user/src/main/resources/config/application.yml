@@ -8,6 +8,8 @@ server:
 spring:
   application:
     name: dmoim-user-service
+  messages:
+    basename: i18n/message
   webflux:
     base-path: /api
     format:
@@ -23,3 +25,6 @@ springdoc:
     operations-sorter: method
     filter: true
     try-it-out-enabled: true
+
+logging:
+  config: classpath:log/log4j2.yml

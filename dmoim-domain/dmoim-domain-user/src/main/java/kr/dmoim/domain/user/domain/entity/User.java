@@ -29,12 +29,12 @@ public class User {
     @Column(value = "NICK_NAME")
     private String nickName;
 
-    @Column(value = "DELETE_YN")
-    private Boolean deleteYn;
-
     @Version
     @Column(value = "VERSION")
     private Long version;
+
+    @Column(value = "DELETE_YN")
+    private Boolean deleteYn;
 
     @CreatedBy
     @Column(value = "CREATED_BY")
@@ -51,5 +51,7 @@ public class User {
     @LastModifiedDate
     @Column(value = "UPDATED_AT")
     private LocalDateTime updatedAt;
+
+
 
 }

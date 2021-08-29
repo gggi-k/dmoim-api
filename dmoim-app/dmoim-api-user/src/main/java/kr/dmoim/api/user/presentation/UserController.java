@@ -1,12 +1,17 @@
 package kr.dmoim.api.user.presentation;
 
+import com.fasterxml.jackson.annotation.JsonView;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import kr.dmoim.api.user.application.service.UserApplicationService;
 import kr.dmoim.api.user.application.dto.UserRequest;
-import kr.dmoim.domain.user.domain.entity.User;
+import kr.dmoim.api.user.application.dto.UserResponse;
+import kr.dmoim.api.user.application.dto.UserViews;
+import kr.dmoim.api.user.application.service.UserApplicationService;
+import kr.dmoim.core.exception.global.DuplicateException;
+import kr.dmoim.core.exception.global.base.BaseException;
 import kr.dmoim.domain.user.domain.service.UserDomainService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -19,11 +24,11 @@ import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import javax.validation.Valid;
@@ -43,14 +48,16 @@ public class UserController {
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
     @Operation(summary = "사용자목록 조회")
-    public boolean findAll () {
-        return true;
+    public Flux<UserResponse> findAll () {
+        return userApplicationService.findAll();
     }
 
     @GetMapping("/{userId}")
     @ResponseStatus(HttpStatus.OK)
+    @JsonView(UserViews.class)
     @Operation(summary = "사용자 조회")
-    public Mono<User> findById (@PathVariable final Long userId) {
+    public Mono<UserResponse> findById (@PathVariable final Long userId) {
+        if(true) throw new DuplicateException();
         return userApplicationService.findById(userId);
     }
 
@@ -70,7 +77,7 @@ public class UserController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     @Operation(summary = "사용자 생성")
-    public boolean create (@RequestBody @Valid UserRequest userRequest, BindingResult result) {
+    public Mono<UserResponse> create (@RequestBody @Valid UserRequest userRequest, BindingResult result) {
         return userApplicationService.create(userRequest);
     }
 

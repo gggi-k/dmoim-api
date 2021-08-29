@@ -12,7 +12,7 @@ public class UserDomainService {
 
     private final UserRepository userRepository;
 
-    public void isDuplicateByEmail(final String email) {
-        userRepository.existsByEmail(email);
+    public boolean isDuplicateByEmail(final String email) {
+        return userRepository.existsByEmail(email).block();
     }
 }
