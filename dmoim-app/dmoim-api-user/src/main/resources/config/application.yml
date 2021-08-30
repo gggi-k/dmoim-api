@@ -16,15 +16,25 @@ spring:
       date-time: yyyy-MM-dd HH:mm:ss
       date: iso
       time: HH:mm:ss
+  boot:
+    admin:
+      client:
+        url: http://localhost:8500
+
+logging:
+  config: classpath:log/log4j2.yml
 
 springdoc:
   default-consumes-media-type: application/json
   default-produces-media-type: application/json
   swagger-ui:
-    use-root-path: true
     operations-sorter: method
+    use-root-path: true
     filter: true
     try-it-out-enabled: true
 
-logging:
-  config: classpath:log/log4j2.yml
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'

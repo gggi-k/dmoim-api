@@ -3,6 +3,7 @@ include 'dmoim-cloud'
 include 'dmoim-cloud:api-gateway'
 include 'dmoim-cloud:config-server'
 include 'dmoim-cloud:service-registry'
+include 'dmoim-cloud:admin-server'
 
 include 'dmoim-app'
 include 'dmoim-app:dmoim-api-user'
@@ -12,5 +13,5 @@ include 'dmoim-domain:dmoim-domain-user'
 
 include 'dmoim-core'
 
-include 'dmoim-user-service'
+
 

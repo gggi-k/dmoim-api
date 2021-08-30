@@ -26,6 +26,7 @@ public class UserRequest {
 
     @NotBlank(groups = UserValid.Create.class)
     @Email
+    @Schema
     private String email;
 
     @NotBlank
