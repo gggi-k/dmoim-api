@@ -6,12 +6,11 @@ include 'dmoim-cloud:service-registry'
 include 'dmoim-cloud:admin-server'
 
 include 'dmoim-app'
+include 'dmoim-app:dmoim-batch'
 include 'dmoim-app:dmoim-api-user'
 
 include 'dmoim-domain'
 include 'dmoim-domain:dmoim-domain-user'
 
 include 'dmoim-core'
-
-
 
