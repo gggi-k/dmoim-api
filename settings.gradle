@@ -1,8 +1,16 @@
 rootProject.name = 'dmoim-api'
-include 'dmoim-user-service'
-include 'dmoim-board-service'
-include 'api-gateway'
-include 'config-service'
-include 'service-registry'
-include 'config-server'
+include 'dmoim-cloud'
+include 'dmoim-cloud:api-gateway'
+include 'dmoim-cloud:config-server'
+include 'dmoim-cloud:service-registry'
+include 'dmoim-cloud:admin-server'
+
+include 'dmoim-app'
+include 'dmoim-app:dmoim-batch'
+include 'dmoim-app:dmoim-api-user'
+
+include 'dmoim-domain'
+include 'dmoim-domain:dmoim-domain-user'
+
+include 'dmoim-core'
 

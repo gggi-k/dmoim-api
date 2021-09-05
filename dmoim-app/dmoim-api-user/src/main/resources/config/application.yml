@@ -1,0 +1,35 @@
+server:
+  port: 9000
+  address: localhost
+  error:
+    whitelabel:
+      enabled: false
+
+spring:
+  application:
+    name: dmoim-api-user
+  messages:
+    basename: i18n/message
+  webflux:
+    base-path: /api
+    format:
+      date-time: yyyy-MM-dd HH:mm:ss
+      date: iso
+      time: HH:mm:ss
+  boot:
+    admin:
+      client:
+        url: http://localhost:8500
+
+logging:
+  config: classpath:log/log4j2.yml
+
+springdoc:
+  default-consumes-media-type: application/json
+  default-produces-media-type: application/json
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'

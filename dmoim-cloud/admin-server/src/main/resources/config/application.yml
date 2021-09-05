@@ -1,0 +1,9 @@
+server:
+  port: 8500
+
+spring:
+  security:
+    user:
+      name: users
+      password: password
+

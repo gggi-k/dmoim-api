@@ -1,0 +1,48 @@
+server:
+  port: 8600
+  address: localhost
+  error:
+    whitelabel:
+      enabled: false
+
+
+spring:
+  application:
+    name: dmoim-api-gateway
+  cloud:
+    gateway:
+#      default-filters:
+#        - name: GlobalFilter
+      globalcors:
+        cors-configurations:
+          '[/**]':
+            allowedOrigins: 'http://localhost:9000/'
+            allowedHeaders: '*'
+            allowedMethods:
+              - GET
+              - POST
+              - PUT
+              - PATCH
+              - DELETE
+      routes:
+        - id: dmoim-api-user
+          uri: http://localhost:9000/
+          predicates:
+            - Path=/api/users/**
+        - id: dmoim-api-board
+          uri: http://localhost:9010/
+          predicates:
+            - Path=/api/boards/**
+
+logging:
+  config: classpath:log/log4j2.yml
+
+springdoc:
+  swagger-ui:
+    operations-sorter: method
+    use-root-path: true
+    filter: true
+    try-it-out-enabled: true
+    urls:
+      - url: http://localhost:9000/v3/api-docs
+        name: 확인용

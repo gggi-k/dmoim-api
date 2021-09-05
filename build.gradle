@@ -1,26 +1,34 @@
 buildscript {
     ext {
-        springBootVersion = '2.5.3'
-        springDependencyVersion = '1.0.11.RELEASE'
+        springBootVersion = "2.5.3"
+        springDependencyVersion = "1.0.11.RELEASE"
+        sourceVaadinVersion = "20.0.7"
+        springCloudVersion = "2020.0.3"
+        springBootAdminVersion = "2.4.3"
+        vaadinVersion = "14.6.8"
+        swaggerVersion = "1.5.10"
     }
     repositories {
         mavenCentral()
     }
     dependencies {
-        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+        classpath "org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}"
         classpath "io.spring.gradle:dependency-management-plugin:${springDependencyVersion}"
+        classpath "com.vaadin:vaadin-gradle-plugin:${sourceVaadinVersion}"
     }
+
 }
 
 allprojects {
-    group 'kr.dmoim'
-    version '0.1.0-SNAPSHOT'
+    group "kr.dmoim"
+    version "0.1.0-SNAPSHOT"
 }
 
 subprojects {
-    apply plugin: 'java'
-    apply plugin: 'org.springframework.boot'
-    apply plugin: 'io.spring.dependency-management'
+    apply plugin: "java"
+    apply plugin: "org.springframework.boot"
+    apply plugin: "io.spring.dependency-management"
+
 
     sourceCompatibility = 11
     targetCompatibility = 11
@@ -37,19 +45,27 @@ subprojects {
     }
 
     dependencies {
+        // log4j2 dependency
         implementation "org.springframework.boot:spring-boot-starter-log4j2"
         modules {
             module("org.springframework.boot:spring-boot-starter-logging") {
                 replacedBy("org.springframework.boot:spring-boot-starter-log4j2", "Use Log4j2 instead of Logback")
             }
         }
-        implementation 'com.fasterxml.jackson.core:jackson-databind'
-        implementation 'com.fasterxml.jackson.dataformat:jackson-dataformat-yaml'
-        compileOnly 'org.projectlombok:lombok'
-        developmentOnly 'org.springframework.boot:spring-boot-devtools'
-        annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
-        annotationProcessor 'org.projectlombok:lombok'
-        testImplementation 'org.springframework.boot:spring-boot-starter-test'
+        implementation "com.fasterxml.jackson.core:jackson-databind"
+        implementation "com.fasterxml.jackson.dataformat:jackson-dataformat-yaml"
+
+        compileOnly "org.projectlombok:lombok"
+        developmentOnly "org.springframework.boot:spring-boot-devtools"
+        annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"
+        annotationProcessor "org.projectlombok:lombok"
+        testImplementation "org.springframework.boot:spring-boot-starter-test"
+    }
+
+    dependencyManagement {
+        imports {
+            mavenBom "de.codecentric:spring-boot-admin-dependencies:${springBootAdminVersion}"
+        }
     }
 
     test {
@@ -57,40 +73,91 @@ subprojects {
     }
 }
 
-project(':api-gateway') {
+/* ======================= ======================= */
+
+project(":dmoim-core") {
     dependencies {
-        //implementation 'org.springframework.cloud:spring-cloud-starter-gateway'
+        implementation "org.springframework.boot:spring-boot-starter-webflux"
     }
 }
 
-project(':config-server') {
+/* ======================= ======================= */
+
+project(":dmoim-cloud:api-gateway") {
     dependencies {
-        //implementation 'org.springframework.cloud:spring-cloud-config-server'
+        implementation project(":dmoim-core")
+        implementation "org.springframework.cloud:spring-cloud-starter-gateway"
+        implementation "org.springdoc:springdoc-openapi-webflux-ui:${swaggerVersion}"
+    }
+    dependencyManagement {
+        imports {
+            mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+        }
     }
 }
 
-project(':dmoim-board-service') {
+project(":dmoim-cloud:config-server") {
+    dependencies {
+        //implementation "org.springframework.cloud:spring-cloud-config-server"
+    }
+}
+
+project(":dmoim-cloud:service-registry") {
     dependencies {
     }
 }
 
-project(':dmoim-user-service') {
+project(":dmoim-cloud:admin-server") {
     dependencies {
-        //implementation 'org.springframework.boot:spring-boot-starter-actuator'
-        //implementation 'org.springframework.boot:spring-boot-starter-cache'
-        //implementation 'org.springframework.cloud:spring-cloud-starter-config'
-        implementation 'org.springframework.boot:spring-boot-starter-data-r2dbc'
-        implementation 'org.springframework.boot:spring-boot-starter-validation'
-        implementation 'org.springframework.boot:spring-boot-starter-webflux'
-
-        implementation "io.springfox:springfox-boot-starter:3.0.0"
-
-        runtimeOnly 'io.r2dbc:r2dbc-h2'
-        testImplementation 'io.projectreactor:reactor-test'
+        implementation "org.springframework.boot:spring-boot-starter-web"
+        implementation "de.codecentric:spring-boot-admin-starter-server"
+        implementation "org.springframework.boot:spring-boot-starter-security"
+        testImplementation "org.springframework.security:spring-security-test"
     }
 }
 
-project(':service-registry') {
+/* ======================= ======================= */
+
+project(":dmoim-app:dmoim-batch") {
+    apply plugin: "com.vaadin"
+
     dependencies {
+        implementation project(":dmoim-core")
+        implementation "org.springframework.boot:spring-boot-starter-batch"
+        implementation "org.springframework.boot:spring-boot-starter-quartz"
+        implementation "com.vaadin:vaadin-spring-boot-starter"
+
+    }
+
+    dependencyManagement {
+        imports {
+            mavenBom "com.vaadin:vaadin-bom:${vaadinVersion}"
+        }
+    }
+}
+
+project(":dmoim-app:dmoim-api-user") {
+    dependencies {
+        implementation project(":dmoim-core")
+        compile project(":dmoim-domain:dmoim-domain-user")
+
+        //implementation "org.springframework.boot:spring-boot-starter-cache"
+        //implementation "org.springframework.cloud:spring-cloud-starter-config"
+        //implementation "org.springframework.boot:spring-boot-starter-hateoas"
+        implementation "org.springdoc:springdoc-openapi-webflux-core:${swaggerVersion}"
+        implementation "org.springframework.boot:spring-boot-starter-actuator"
+        implementation "de.codecentric:spring-boot-admin-starter-client"
+        testImplementation "io.projectreactor:reactor-test"
+    }
+}
+
+/* ======================= ======================= */
+
+project(":dmoim-domain:dmoim-domain-user") {
+    dependencies {
+        implementation project(":dmoim-core")
+        compile "org.springframework.boot:spring-boot-starter-data-r2dbc"
+        compile "org.springframework.boot:spring-boot-starter-validation"
+        runtimeOnly "io.r2dbc:r2dbc-h2"
     }
 }
