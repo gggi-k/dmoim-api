@@ -7,7 +7,7 @@ server:
 
 spring:
   application:
-    name: dmoim-user-service
+    name: dmoim-api-user
   messages:
     basename: i18n/message
   webflux:
@@ -27,11 +27,6 @@ logging:
 springdoc:
   default-consumes-media-type: application/json
   default-produces-media-type: application/json
-  swagger-ui:
-    operations-sorter: method
-    use-root-path: true
-    filter: true
-    try-it-out-enabled: true
 
 management:
   endpoints:

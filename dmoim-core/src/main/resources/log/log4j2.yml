@@ -1,6 +1,6 @@
 Configuration:
   status: warn
-  name: dmoim-user-service
+  name: dmoim-api-user
   Properties:
     Property:
     - name: base-dir
@@ -21,7 +21,7 @@ Configuration:
     - name: HtmlAppender
       fileName: ${base-dir}/html/${filename}.html
       HtmlLayout:
-        title: user-service
+        title: api-user
         locationInfo: true
         datePattern: DEFAULT
   Loggers:

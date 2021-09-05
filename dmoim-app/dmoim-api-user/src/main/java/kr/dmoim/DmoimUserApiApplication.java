@@ -6,9 +6,9 @@ import org.springframework.web.reactive.config.EnableWebFlux;
 
 @SpringBootApplication
 @EnableWebFlux
-public class DmoimUserServiceApplication {
+public class DmoimUserApiApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(DmoimUserServiceApplication.class, args);
+        SpringApplication.run(DmoimUserApiApplication.class, args);
     }
 }
