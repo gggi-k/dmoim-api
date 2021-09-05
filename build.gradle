@@ -100,8 +100,11 @@ project(':dmoim-cloud:service-registry') {
 
 project(':dmoim-cloud:admin-server') {
     dependencies {
+        implementation 'org.springframework.boot:spring-boot-starter-web'
         implementation 'de.codecentric:spring-boot-admin-starter-server'
         implementation 'de.codecentric:spring-boot-admin-server-ui'
+        implementation 'org.springframework.boot:spring-boot-starter-security'
+        testImplementation 'org.springframework.security:spring-security-test'
     }
 }
 
