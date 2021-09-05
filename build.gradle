@@ -44,14 +44,6 @@ subprojects {
     }
 
     dependencies {
-        implementation "org.springframework.boot:spring-boot-starter-log4j2"
-        modules {
-            module("org.springframework.boot:spring-boot-starter-logging") {
-                replacedBy("org.springframework.boot:spring-boot-starter-log4j2", "Use Log4j2 instead of Logback")
-            }
-        }
-        implementation 'com.fasterxml.jackson.core:jackson-databind'
-        implementation 'com.fasterxml.jackson.dataformat:jackson-dataformat-yaml'
         compileOnly 'org.projectlombok:lombok'
         developmentOnly 'org.springframework.boot:spring-boot-devtools'
         annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
@@ -73,6 +65,16 @@ subprojects {
 project(':dmoim-core') {
     dependencies {
         implementation 'org.springframework.boot:spring-boot-starter-webflux'
+
+        // log4j2 dependency
+        implementation "org.springframework.boot:spring-boot-starter-log4j2"
+        modules {
+            module("org.springframework.boot:spring-boot-starter-logging") {
+                replacedBy("org.springframework.boot:spring-boot-starter-log4j2", "Use Log4j2 instead of Logback")
+            }
+        }
+        implementation 'com.fasterxml.jackson.core:jackson-databind'
+        implementation 'com.fasterxml.jackson.dataformat:jackson-dataformat-yaml'
     }
 }
 
