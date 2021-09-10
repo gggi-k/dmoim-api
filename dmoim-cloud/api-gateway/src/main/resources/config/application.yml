@@ -5,7 +5,6 @@ server:
     whitelabel:
       enabled: false
 
-
 spring:
   application:
     name: dmoim-api-gateway
@@ -13,26 +12,30 @@ spring:
     gateway:
 #      default-filters:
 #        - name: GlobalFilter
+      httpclient:
+        connect-timeout: 6000
+        response-timeout: 3000
       globalcors:
         cors-configurations:
           '[/**]':
-            allowedOrigins: 'http://localhost:9000/'
+            allowedOrigins: '*'
             allowedHeaders: '*'
             allowedMethods:
-              - GET
-              - POST
-              - PUT
-              - PATCH
-              - DELETE
+            - GET
+            - POST
+            - PUT
+            - PATCH
+            - DELETE
       routes:
         - id: dmoim-api-user
           uri: http://localhost:9000/
           predicates:
-            - Path=/api/users/**
-        - id: dmoim-api-board
-          uri: http://localhost:9010/
-          predicates:
-            - Path=/api/boards/**
+          - Path=/api/users/**, /api-docs/users
+          order: 0
+#        - id: dmoim-api-board
+#          uri: http://localhost:9010/
+#          predicates:
+#            - Path=/api/boards/**
 
 logging:
   config: classpath:log/log4j2.yml
@@ -43,6 +46,8 @@ springdoc:
     use-root-path: true
     filter: true
     try-it-out-enabled: true
+    csrf:
+      enabled: true
     urls:
-      - url: http://localhost:9000/v3/api-docs
-        name: 확인용
+    - url: http://localhost:9000/api-docs/users
+      name: 사용자 API

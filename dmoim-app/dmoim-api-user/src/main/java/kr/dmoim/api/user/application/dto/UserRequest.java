@@ -31,13 +31,16 @@ public class UserRequest {
 
     @NotBlank
     @Size(groups = UserValid.Create.class)
+    @Schema
     private String nickName;
 
     @NotBlank
     @Size(groups = UserValid.Create.class)
     @Pattern(regexp = "")
+    @Schema
     private String password;
 
     @NotNull(groups = UserValid.Update.class)
+    @Schema
     private Long version;
 }
