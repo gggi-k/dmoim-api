@@ -79,6 +79,7 @@ subprojects {
 project(":dmoim-core") {
     dependencies {
         implementation "org.springframework.boot:spring-boot-starter-webflux"
+        implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     }
 }
 
@@ -149,6 +150,13 @@ project(":dmoim-app:dmoim-api-user") {
         implementation "org.springframework.boot:spring-boot-starter-actuator"
         implementation "de.codecentric:spring-boot-admin-starter-client"
         testImplementation "io.projectreactor:reactor-test"
+    }
+}
+
+project(":dmoim-app:dmoim-api-board") {
+    dependencies {
+        implementation project(":dmoim-core")
+        compile project(":dmoim-domain:dmoim-domain-board")
     }
 }
 

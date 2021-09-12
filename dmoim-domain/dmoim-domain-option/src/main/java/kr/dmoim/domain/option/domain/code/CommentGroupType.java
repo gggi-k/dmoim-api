@@ -1,4 +1,4 @@
-package kr.dmoim.domain.option.code;
+package kr.dmoim.domain.option.domain.code;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

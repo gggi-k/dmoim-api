@@ -1,15 +1,18 @@
-package kr.dmoim.domain.option.entity;
+package kr.dmoim.domain.option.domain.entity;
 
-import kr.dmoim.domain.option.code.FileGroupType;
+import kr.dmoim.domain.option.domain.code.FileGroupType;
+import kr.dmoim.domain.option.domain.vo.TargetId;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.Type;
 
+import javax.persistence.AttributeOverride;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import java.time.LocalDateTime;
@@ -21,9 +24,16 @@ import java.time.LocalDateTime;
 public class FileEntity {
 
     @Id
-    @Column(name = "FILE_GROUP_TYPE")
+    @GeneratedValue
+    @Column(name = "FILE_ID")
+    private Long fileId;
+
     @Enumerated(EnumType.STRING)
+    @Column(name = "FILE_GROUP_TYPE")
     private FileGroupType fileGroupType;
+
+    @AttributeOverride(name = "value", column = @Column(name = "TARGET_ID"))
+    private TargetId targetId;
 
     @Column(name = "FILE_ORIGIN_NAME")
     private String fileOriginName;

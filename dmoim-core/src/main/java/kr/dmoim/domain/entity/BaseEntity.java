@@ -1,30 +1,15 @@
-package kr.dmoim.domain.option.entity;
+package kr.dmoim.domain.entity;
 
-import kr.dmoim.domain.option.code.CommentGroupType;
-import lombok.AccessLevel;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.MappedSuperclass;
 import javax.persistence.Version;
 import java.time.LocalDateTime;
 
-@Getter
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
-@Entity
-@Table(name = "OPTION_COMMENT_TB")
-public class CommentEntity {
-
-    @Id
-    @Column(name = "COMMENT_GROUP_TYPE")
-    @Enumerated(EnumType.STRING)
-    private CommentGroupType commentGroupType;
+@MappedSuperclass
+public abstract class BaseEntity {
 
     @Version
     @Column(name = "VERSION")

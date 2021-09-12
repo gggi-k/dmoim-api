@@ -1,4 +1,4 @@
-package kr.dmoim.domain.option.code;
+package kr.dmoim.domain.option.domain.code;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -10,6 +10,7 @@ import java.net.URL;
 @AllArgsConstructor
 public enum FileGroupType {
 
+    USER_PROFILE("사용자 프로필", null, "/files/user/profile", 1, 10),
     NOTICE("공지사항 파일", null, "/files/notice", 5, 10);
 
     private final String fileGroupName;

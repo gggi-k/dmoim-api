@@ -8,6 +8,7 @@ include 'dmoim-cloud:admin-server'
 include 'dmoim-app'
 include 'dmoim-app:dmoim-batch'
 include 'dmoim-app:dmoim-api-user'
+include 'dmoim-app:dmoim-api-board'
 
 include 'dmoim-domain'
 include 'dmoim-domain:dmoim-domain-user'
@@ -15,4 +16,5 @@ include 'dmoim-domain:dmoim-domain-board'
 include 'dmoim-domain:dmoim-domain-option'
 
 include 'dmoim-core'
+
 
