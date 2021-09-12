@@ -3,8 +3,8 @@ package kr.dmoim.api.user.application.dto;
 
 import com.fasterxml.jackson.annotation.JsonView;
 import io.swagger.v3.oas.annotations.media.Schema;
-import kr.dmoim.domain.user.domain.entity.User;
-import lombok.AccessLevel;
+import kr.dmoim.domain.user.domain.entity.UserEntity;
+import kr.dmoim.domain.vo.Email;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.ToString;
@@ -22,7 +22,7 @@ public class UserResponse {
 
     @JsonView(UserViews.List.class)
     @Schema(description = "이메일")
-    private final String email;
+    private final Email email;
 
     @JsonView(UserViews.List.class)
     @Schema(description = "닉네임")
@@ -51,17 +51,17 @@ public class UserResponse {
     private final LocalDateTime updatedAt;
 
 
-    public static UserResponse fromEntity(final User user) {
+    public static UserResponse fromEntity(final UserEntity userEntity) {
         return UserResponse
                 .builder()
-                    .userId(user.getUserId())
-                    .email(user.getEmail())
-                    .nickName(user.getNickName())
-                    .version(user.getVersion())
-                    .createdBy(user.getCreatedBy())
-                    .createdAt(user.getCreatedAt())
-                    .updatedBy(user.getUpdatedBy())
-                    .updatedAt(user.getUpdatedAt())
+                    .userId(userEntity.getUserId())
+                    .email(userEntity.getEmail())
+                    .nickName(userEntity.getNickName())
+                    .version(userEntity.getVersion())
+                    .createdBy(userEntity.getCreatedBy())
+                    .createdAt(userEntity.getCreatedAt())
+                    .updatedBy(userEntity.getUpdatedBy())
+                    .updatedAt(userEntity.getUpdatedAt())
                 .build();
     }
 }

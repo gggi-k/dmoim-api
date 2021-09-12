@@ -11,6 +11,8 @@ include 'dmoim-app:dmoim-api-user'
 
 include 'dmoim-domain'
 include 'dmoim-domain:dmoim-domain-user'
+include 'dmoim-domain:dmoim-domain-board'
+include 'dmoim-domain:dmoim-domain-option'
 
 include 'dmoim-core'
 

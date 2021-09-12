@@ -1,13 +1,9 @@
 package kr.dmoim.api.user.presentation;
 
 import com.fasterxml.jackson.annotation.JsonView;
-import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
-import io.swagger.v3.oas.annotations.info.Info;
 import io.swagger.v3.oas.annotations.media.Content;
-import io.swagger.v3.oas.annotations.media.ExampleObject;
-import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
@@ -18,14 +14,12 @@ import kr.dmoim.api.user.application.dto.UserValid;
 import kr.dmoim.api.user.application.dto.UserViews;
 import kr.dmoim.api.user.application.service.UserApplicationService;
 import kr.dmoim.core.exception.global.DuplicateException;
-import kr.dmoim.core.exception.global.base.BaseException;
-import kr.dmoim.domain.user.domain.entity.User;
 import kr.dmoim.domain.user.domain.service.UserDomainService;
+import kr.dmoim.domain.vo.Email;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.context.support.MessageSourceAccessor;
 import org.springframework.http.HttpStatus;
-import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -39,8 +33,6 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
-
-import javax.validation.Valid;
 
 @Log4j2
 @RequiredArgsConstructor
@@ -77,7 +69,7 @@ public class UserController {
         @ApiResponse(responseCode = "200", description = "중복된 이메일이 존재하지않습니다"),
         @ApiResponse(responseCode = "409", description = "중복된 이메일 존재합니다")
     })
-    public void isDuplicateByUserId (@Parameter(description = "이메일") @PathVariable final String email) {
+    public void isDuplicateByUserId (@Parameter(description = "이메일") @PathVariable final Email email) {
         if(userDomainService.isDuplicateByEmail(email)) throw new DuplicateException("중복된 이메일 존재합니다");
     }
 

@@ -3,7 +3,7 @@ package kr.dmoim.api.user.application.service;
 import kr.dmoim.api.user.application.dto.UserRequest;
 import kr.dmoim.api.user.application.dto.UserResponse;
 import kr.dmoim.core.exception.global.DuplicateException;
-import kr.dmoim.domain.user.domain.entity.User;
+import kr.dmoim.domain.user.domain.entity.UserEntity;
 import kr.dmoim.domain.user.domain.service.UserDomainService;
 import kr.dmoim.domain.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -25,7 +25,6 @@ public class UserApplicationService {
     }
 
     public Mono<UserResponse> findById(final Long id) {
-        if(true) throw new RuntimeException("에러입니당");
         return userRepository.findById(id)
                 .map(UserResponse::fromEntity);
     }
@@ -34,7 +33,7 @@ public class UserApplicationService {
 
         if(userDomainService.isDuplicateByEmail(userRequest.getEmail())) throw new DuplicateException("중복된 정보가 존재합니다");
 
-        return userRepository.save(User
+        return userRepository.save(UserEntity
                 .builder()
                     .email(userRequest.getEmail())
                     .password(userRequest.getPassword())

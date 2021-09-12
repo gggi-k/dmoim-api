@@ -4,6 +4,8 @@ import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.Parameters;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.tags.Tags;
+import kr.dmoim.domain.vo.Email;
+import kr.dmoim.domain.vo.Password;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -11,7 +13,6 @@ import lombok.ToString;
 import lombok.experimental.Accessors;
 import org.springframework.validation.annotation.Validated;
 
-import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
@@ -25,9 +26,8 @@ import javax.validation.constraints.Size;
 public class UserRequest {
 
     @NotBlank(groups = UserValid.Create.class)
-    @Email
     @Schema
-    private String email;
+    private Email email;
 
     @NotBlank
     @Size(groups = UserValid.Create.class)
@@ -36,9 +36,8 @@ public class UserRequest {
 
     @NotBlank
     @Size(groups = UserValid.Create.class)
-    @Pattern(regexp = "")
     @Schema
-    private String password;
+    private Password password;
 
     @NotNull(groups = UserValid.Update.class)
     @Schema

@@ -1,5 +1,7 @@
 package kr.dmoim.domain.user.domain.entity;
 
+import kr.dmoim.domain.vo.Email;
+import kr.dmoim.domain.vo.Password;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.ToString;
@@ -14,17 +16,17 @@ import java.time.LocalDateTime;
 @Builder
 @ToString
 @Table("USER_TB")
-public class User {
+public class UserEntity {
 
     @Id
     @Column(value = "USER_ID")
     private final Long userId;
 
     @Column(value = "EMAIL")
-    private String email;
+    private Email email;
 
     @Column(value = "PASSWORD")
-    private String password;
+    private Password password;
 
     @Column(value = "NICK_NAME")
     private String nickName;
