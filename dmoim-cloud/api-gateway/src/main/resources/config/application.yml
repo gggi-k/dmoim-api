@@ -8,10 +8,15 @@ server:
 spring:
   application:
     name: dmoim-api-gateway
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://localhost:8700
   cloud:
     gateway:
-#      default-filters:
-#        - name: GlobalFilter
+      #      default-filters:
+      #        - name: GlobalFilter
       httpclient:
         connect-timeout: 6000
         response-timeout: 3000
@@ -27,11 +32,11 @@ spring:
             - PATCH
             - DELETE
       routes:
-        - id: dmoim-api-user
-          uri: http://localhost:9000/
-          predicates:
-          - Path=/api/users/**, /api-docs/users
-          order: 0
+          - id: dmoim-api-user
+            uri: http://localhost:9000/
+            predicates:
+            - Path=/api/users/**, /api-docs/users
+            order: 0
 #        - id: dmoim-api-board
 #          uri: http://localhost:9010/
 #          predicates:

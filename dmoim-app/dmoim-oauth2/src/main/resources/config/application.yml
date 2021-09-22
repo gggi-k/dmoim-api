@@ -1,0 +1,17 @@
+server:
+  port: 8700
+  address: localhost
+  error:
+    whitelabel:
+      enabled: false
+
+spring:
+  application:
+    name: dmoim-oauth2
+  messages:
+    basename: i18n/message
+
+logging:
+  config: classpath:log/log4j2.yml
+
+

@@ -9,6 +9,7 @@ include 'dmoim-app'
 include 'dmoim-app:dmoim-batch'
 include 'dmoim-app:dmoim-api-user'
 include 'dmoim-app:dmoim-api-board'
+include 'dmoim-app:dmoim-oauth2'
 
 include 'dmoim-domain'
 include 'dmoim-domain:dmoim-domain-user'

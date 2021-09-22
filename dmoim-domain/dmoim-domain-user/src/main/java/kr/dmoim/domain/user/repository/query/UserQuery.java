@@ -1,4 +1,4 @@
-package kr.dmoim.domain.user.domain.query;
+package kr.dmoim.domain.user.repository.query;
 
 import lombok.Getter;
 import lombok.Setter;

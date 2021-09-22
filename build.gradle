@@ -8,9 +8,11 @@ buildscript {
         vaadinVersion = "14.6.8"
         swaggerVersion = "1.5.10"
     }
+
     repositories {
         mavenCentral()
     }
+
     dependencies {
         classpath "org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}"
         classpath "io.spring.gradle:dependency-management-plugin:${springDependencyVersion}"
@@ -79,7 +81,6 @@ subprojects {
 project(":dmoim-core") {
     dependencies {
         implementation "org.springframework.boot:spring-boot-starter-webflux"
-        implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     }
 }
 
@@ -88,6 +89,7 @@ project(":dmoim-core") {
 project(":dmoim-cloud:api-gateway") {
     dependencies {
         implementation project(":dmoim-core")
+        implementation 'org.springframework.boot:spring-boot-starter-oauth2-resource-server'
         implementation "org.springframework.cloud:spring-cloud-starter-gateway"
         implementation "org.springdoc:springdoc-openapi-webflux-ui:${swaggerVersion}"
     }
@@ -119,6 +121,14 @@ project(":dmoim-cloud:admin-server") {
 }
 
 /* ======================= APP ======================= */
+
+project(":dmoim-app:dmoim-oauth2") {
+    dependencies {
+        implementation project(":dmoim-core")
+        compile project(":dmoim-domain:dmoim-domain-user")
+        implementation 'org.springframework.security:spring-security-oauth2-authorization-server:0.2.0'
+    }
+}
 
 project(":dmoim-app:dmoim-batch") {
     apply plugin: "com.vaadin"
@@ -166,6 +176,7 @@ project(":dmoim-domain:dmoim-domain-user") {
     dependencies {
         implementation project(":dmoim-core")
         compile "org.springframework.boot:spring-boot-starter-data-r2dbc"
+        //runtimeOnly 'mysql:mysql-connector-java'
         runtimeOnly "io.r2dbc:r2dbc-h2"
     }
 }

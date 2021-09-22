@@ -1,6 +1,6 @@
 package kr.dmoim.domain.option.domain.entity;
 
-import kr.dmoim.domain.entity.BaseEntity;
+import kr.dmoim.domain.option.domain.BaseEntity;
 import kr.dmoim.domain.option.domain.code.CommentGroupType;
 import kr.dmoim.domain.option.domain.vo.TargetId;
 import lombok.AccessLevel;

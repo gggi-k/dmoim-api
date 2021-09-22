@@ -2,7 +2,6 @@ package kr.dmoim.core.exception.code;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import org.springframework.web.server.ResponseStatusException;
 
 @Getter
 @AllArgsConstructor

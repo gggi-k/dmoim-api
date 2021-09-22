@@ -1,4 +1,4 @@
-package kr.dmoim.domain.entity;
+package kr.dmoim.domain.option.domain;
 
 import lombok.Getter;
 import org.hibernate.annotations.Type;
