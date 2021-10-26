@@ -6,7 +6,6 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.ToString;
 import org.springframework.data.annotation.*;
-import org.springframework.data.convert.ReadingConverter;
 import org.springframework.data.relational.core.mapping.Column;
 import org.springframework.data.relational.core.mapping.Table;
 
@@ -35,8 +34,8 @@ public class UserEntity {
     @Column(value = "VERSION")
     private Long version;
 
-    @Column(value = "DELETE_YN")
-    private Boolean deleteYn;
+    @Column(value = "DELETED")
+    private Boolean deleted;
 
     @CreatedBy
     @Column(value = "CREATED_BY")

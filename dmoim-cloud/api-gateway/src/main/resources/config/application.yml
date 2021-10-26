@@ -8,11 +8,11 @@ server:
 spring:
   application:
     name: dmoim-api-gateway
-  security:
-    oauth2:
-      resourceserver:
-        jwt:
-          issuer-uri: http://localhost:8700
+#  security:
+#    oauth2:
+#      resourceserver:
+#        jwt:
+#          issuer-uri: http://localhost:8700
   cloud:
     gateway:
       #      default-filters:

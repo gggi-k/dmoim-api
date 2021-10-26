@@ -17,8 +17,6 @@ public class YNConverter {
         }
     }
 
-
-
     @WritingConverter
     public static class YNWriteConverter implements Converter<Boolean, String> {
 
@@ -27,7 +25,5 @@ public class YNConverter {
             return source.booleanValue() ? TRUE : FALSE;
         }
     }
-
-
 
 }

@@ -13,6 +13,7 @@ import kr.dmoim.api.user.application.dto.UserResponse;
 import kr.dmoim.api.user.application.dto.UserValid;
 import kr.dmoim.api.user.application.dto.UserViews;
 import kr.dmoim.api.user.application.service.UserApplicationService;
+import kr.dmoim.core.excel.aspect.ExcelDownload;
 import kr.dmoim.core.exception.global.DuplicateException;
 import kr.dmoim.domain.user.domain.service.UserDomainService;
 import kr.dmoim.domain.vo.Email;
@@ -21,16 +22,7 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.context.support.MessageSourceAccessor;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PatchMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
@@ -107,5 +99,13 @@ public class UserController {
         @ApiResponse(responseCode = "404", description = "존재하지않는 사용자입니다")
     })
     public void removeById (@Parameter(description = "사용자 아이디") @PathVariable final Long userId) {
+    }
+
+    @GetMapping("/excel")
+    @ResponseStatus(HttpStatus.OK)
+    @Operation(summary = "사용자 엑셀 다운로드")
+    @ExcelDownload(workbookName = "워크북 테스트")
+    public String downloadUserExcel () {
+        return null;
     }
 }

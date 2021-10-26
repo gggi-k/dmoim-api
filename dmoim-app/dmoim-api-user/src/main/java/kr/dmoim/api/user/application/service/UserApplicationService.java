@@ -38,7 +38,7 @@ public class UserApplicationService {
                     .email(userRequest.getEmail())
                     .password(userRequest.getPassword())
                     .nickName(userRequest.getNickName())
-                    .deleteYn(false)
+                    .deleted(false)
                 .build())
                 .map(UserResponse::fromEntity);
     }
