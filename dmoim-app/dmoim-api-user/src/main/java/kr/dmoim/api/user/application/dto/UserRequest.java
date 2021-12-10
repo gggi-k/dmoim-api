@@ -1,21 +1,16 @@
 package kr.dmoim.api.user.application.dto;
 
-import io.swagger.v3.oas.annotations.Parameter;
-import io.swagger.v3.oas.annotations.Parameters;
 import io.swagger.v3.oas.annotations.media.Schema;
-import io.swagger.v3.oas.annotations.tags.Tags;
-import kr.dmoim.domain.vo.Email;
-import kr.dmoim.domain.vo.Password;
+import kr.dmoim.core.domain.vo.Email;
+import kr.dmoim.core.domain.vo.Password;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 import lombok.experimental.Accessors;
-import org.springframework.validation.annotation.Validated;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
 @NoArgsConstructor(staticName = "create")

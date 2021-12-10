@@ -4,7 +4,7 @@ package kr.dmoim.api.user.application.dto;
 import com.fasterxml.jackson.annotation.JsonView;
 import io.swagger.v3.oas.annotations.media.Schema;
 import kr.dmoim.domain.user.domain.entity.UserEntity;
-import kr.dmoim.domain.vo.Email;
+import kr.dmoim.core.domain.vo.Email;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.ToString;

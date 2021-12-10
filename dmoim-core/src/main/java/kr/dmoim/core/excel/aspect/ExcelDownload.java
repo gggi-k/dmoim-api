@@ -7,5 +7,9 @@ import java.lang.annotation.*;
 @Documented
 public @interface ExcelDownload {
 
+    String DEFAULT_PASSWORD = "dmoim-excel-password";
+
     String workbookName();
+
+    String password() default DEFAULT_PASSWORD;
 }

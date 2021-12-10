@@ -1,4 +1,4 @@
-package kr.dmoim.domain.vo;
+package kr.dmoim.core.domain.vo;
 
 import lombok.Value;
 

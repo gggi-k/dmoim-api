@@ -1,7 +1,7 @@
 package kr.dmoim.domain.user.domain.entity;
 
-import kr.dmoim.domain.vo.Email;
-import kr.dmoim.domain.vo.Password;
+import kr.dmoim.core.domain.vo.Email;
+import kr.dmoim.core.domain.vo.Password;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.ToString;

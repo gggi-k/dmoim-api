@@ -8,4 +8,6 @@ import java.lang.annotation.*;
 public @interface ExcelCell {
 
     String headerName();
+
+    ExcelCellStyle headerCellStyle() default @ExcelCellStyle;
 }

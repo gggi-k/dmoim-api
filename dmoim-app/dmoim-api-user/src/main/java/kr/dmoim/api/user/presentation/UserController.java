@@ -16,7 +16,7 @@ import kr.dmoim.api.user.application.service.UserApplicationService;
 import kr.dmoim.core.excel.aspect.ExcelDownload;
 import kr.dmoim.core.exception.global.DuplicateException;
 import kr.dmoim.domain.user.domain.service.UserDomainService;
-import kr.dmoim.domain.vo.Email;
+import kr.dmoim.core.domain.vo.Email;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.context.support.MessageSourceAccessor;

@@ -12,6 +12,7 @@ buildscript {
         swaggerVersion = "1.5.10"
         poiVersion = "5.0.0"
         aopVersion = "2.5.6"
+        reflectionsVersion = "0.10.2"
         notUseModules = ArrayList.of(project(':dmoim-app'), project(':dmoim-cloud'), project(':dmoim-domain'))
     }
 
@@ -97,6 +98,7 @@ project(":dmoim-core") {
         implementation "org.springframework.boot:spring-boot-starter-webflux"
         implementation "org.springframework.boot:spring-boot-starter-aop:${aopVersion}"
         implementation "org.apache.poi:poi-ooxml:${poiVersion}"
+        implementation "org.reflections:reflections:${reflectionsVersion}"
 
         testImplementation "org.apache.poi:poi-ooxml:${poiVersion}"
     }
