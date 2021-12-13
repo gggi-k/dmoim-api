@@ -1,10 +1,19 @@
 package kr.dmoim.core.domain.vo;
 
+import com.fasterxml.jackson.annotation.JsonValue;
 import lombok.Value;
 
-@Value
+@Value(staticConstructor = "valueOf")
 public class Email {
 
-    @javax.validation.constraints.Email
-    private final String value;
+    @JsonValue
+    String value;
+
+    public String getId() {
+        return this.value;
+    }
+
+    public String getDomain() {
+        return this.value;
+    }
 }

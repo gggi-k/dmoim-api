@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 @Log4j2
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/api/users-verify")
+@RequestMapping("/api/v1/users-verify")
 @Tag(name = "사용자 확인", description = "(아이디, 비밀번호 찾기)")
 public class UserVerifyController {
 

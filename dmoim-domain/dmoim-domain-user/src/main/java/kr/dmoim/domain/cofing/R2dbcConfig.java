@@ -1,7 +1,51 @@
 package kr.dmoim.domain.cofing;
 
+import io.r2dbc.spi.ConnectionFactories;
+import io.r2dbc.spi.ConnectionFactory;
+import io.r2dbc.spi.ConnectionFactoryOptions;
+import kr.dmoim.r2dbc.convert.YNConverter;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.data.r2dbc.config.AbstractR2dbcConfiguration;
 import org.springframework.data.r2dbc.repository.config.EnableR2dbcRepositories;
+import org.springframework.r2dbc.connection.R2dbcTransactionManager;
+import org.springframework.transaction.ReactiveTransactionManager;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 
+import java.util.List;
+
+@Configuration
 @EnableR2dbcRepositories(basePackages = "kr.dmoim.domain.user")
-public class R2dbcConfig {
+@EnableTransactionManagement
+public class R2dbcConfig extends AbstractR2dbcConfiguration {
+
+    @Bean("dmoimConnectionFactory")
+    @Override
+    public ConnectionFactory connectionFactory() {
+
+        return ConnectionFactories.get(ConnectionFactoryOptions.builder()
+                .option(ConnectionFactoryOptions.DRIVER, "mysql")
+                .option(ConnectionFactoryOptions.PROTOCOL, "r2dbc")
+                .option(ConnectionFactoryOptions.HOST, "localhost")
+                .option(ConnectionFactoryOptions.PORT, 3306)
+                .option(ConnectionFactoryOptions.USER, "root")
+                .option(ConnectionFactoryOptions.PASSWORD, "DMOIMSYSTEM2021@")
+                .option(ConnectionFactoryOptions.DATABASE, "dmoim_user")
+                .build());
+    }
+
+    @Override
+    protected List<Object> getCustomConverters() {
+        return List.of(
+            new YNConverter.YNReadConverter(),
+            new YNConverter.YNWriteConverter()
+        );
+    }
+
+    @Bean
+    public ReactiveTransactionManager reactiveTransactionManager(@Qualifier("dmoimConnectionFactory") ConnectionFactory connectionFactory) {
+        return new R2dbcTransactionManager(connectionFactory);
+    }
+
 }

@@ -2,20 +2,19 @@ package kr.dmoim.domain.user.domain.entity;
 
 import kr.dmoim.core.domain.vo.Email;
 import kr.dmoim.core.domain.vo.Password;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.ToString;
-import org.springframework.data.annotation.*;
+import kr.dmoim.r2dbc.entity.BaseEntity;
+import lombok.*;
+import lombok.experimental.SuperBuilder;
+import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Column;
 import org.springframework.data.relational.core.mapping.Table;
 
-import java.time.LocalDateTime;
-
 @Getter
-@Builder
+@SuperBuilder
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
 @ToString
 @Table("USER_TB")
-public class UserEntity {
+public class UserEntity extends BaseEntity {
 
     @Id
     @Column(value = "USER_ID")
@@ -29,30 +28,5 @@ public class UserEntity {
 
     @Column(value = "NICK_NAME")
     private String nickName;
-
-    @Version
-    @Column(value = "VERSION")
-    private Long version;
-
-    @Column(value = "DELETED")
-    private Boolean deleted;
-
-    @CreatedBy
-    @Column(value = "CREATED_BY")
-    private Long createdBy;
-
-    @CreatedDate
-    @Column(value = "CREATED_AT")
-    private LocalDateTime createdAt;
-
-    @LastModifiedBy
-    @Column(value = "UPDATED_BY")
-    private Long updatedBy;
-
-    @LastModifiedDate
-    @Column(value = "UPDATED_AT")
-    private LocalDateTime updatedAt;
-
-
 
 }

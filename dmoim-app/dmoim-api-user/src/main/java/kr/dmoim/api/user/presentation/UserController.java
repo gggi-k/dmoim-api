@@ -29,7 +29,7 @@ import reactor.core.publisher.Mono;
 @Log4j2
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/api/users")
+@RequestMapping("/api/v1/users")
 @Tag(name = "사용자", description = "(조회, 등록, 수정, 중복확인)")
 public class UserController {
 
@@ -55,7 +55,7 @@ public class UserController {
         /*return userApplicationService.findById(userId);*/
     }
 
-    @RequestMapping(value = "/duplicate/email/{email}", method = RequestMethod.HEAD)
+    @GetMapping("/duplicate/email/{email}")
     @Operation(summary = "사용자 이메일 중복확인")
     @ApiResponses({
         @ApiResponse(responseCode = "200", description = "중복된 이메일이 존재하지않습니다"),

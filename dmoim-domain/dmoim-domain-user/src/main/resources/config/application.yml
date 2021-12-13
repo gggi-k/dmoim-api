@@ -1,7 +1,3 @@
-spring:
-  r2dbc:
-    name: h2
-    username: user
 
 
 

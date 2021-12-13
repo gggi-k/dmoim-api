@@ -1,4 +1,4 @@
-package kr.dmoim.domain.user.domain.convert;
+package kr.dmoim.r2dbc.convert;
 
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.data.convert.ReadingConverter;
