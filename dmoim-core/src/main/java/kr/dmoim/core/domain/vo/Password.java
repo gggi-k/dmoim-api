@@ -4,7 +4,7 @@ import lombok.Value;
 
 import javax.validation.constraints.Pattern;
 
-@Value
+@Value(staticConstructor = "valueOf")
 public class Password {
 
     @Pattern(regexp = "")

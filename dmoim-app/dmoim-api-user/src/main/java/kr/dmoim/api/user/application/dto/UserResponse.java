@@ -30,7 +30,7 @@ public class UserResponse {
 
     @JsonView(UserViews.List.class)
     @Schema(description = "삭제여부")
-    private final Boolean deleteYn;
+    private final Boolean deleted;
 
     @JsonView(UserViews.List.class)
     @Schema(description = "버전")

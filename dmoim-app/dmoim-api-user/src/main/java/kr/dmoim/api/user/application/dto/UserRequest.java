@@ -20,21 +20,28 @@ import javax.validation.constraints.Size;
 @ToString
 public class UserRequest {
 
-    @NotBlank(groups = UserValid.Create.class)
-    @Schema
+    public interface Create {}
+    public interface Update {}
+
+    @NotNull(groups = Update.class)
+    @Schema(description = "사용자 아이디", example = "test")
+    private Long userId;
+
+    @NotBlank(groups = Create.class)
+    @Schema(type = "String", description = "이메일", example = "test@dmoim.com")
     private Email email;
 
     @NotBlank
-    @Size(groups = UserValid.Create.class)
-    @Schema
+    @Size(groups = Create.class)
+    @Schema(description = "닉네임", example = "테스트네임")
     private String nickName;
 
     @NotBlank
-    @Size(groups = UserValid.Create.class)
-    @Schema
+    @Size(groups = Create.class)
+    @Schema(type = "String", description = "설명", example = "test12345")
     private Password password;
 
-    @NotNull(groups = UserValid.Update.class)
-    @Schema
+    @NotNull(groups = Update.class)
+    @Schema(description = "버전")
     private Long version;
 }

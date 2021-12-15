@@ -32,7 +32,14 @@ Configuration:
 #      - ref: FileAppender
 #      - ref: HtmlAppender
     Logger:
-      name: kr.dmoim
+    - name: kr.dmoim
+      level: debug
+      additivity: false
+      AppenderRef:
+      - ref: ConsoleAppender
+#      - ref: FileAppender
+#      - ref: HtmlAppender
+    - name: org.springframework.r2dbc
       level: debug
       additivity: false
       AppenderRef:

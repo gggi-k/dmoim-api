@@ -14,6 +14,6 @@ public class UserDomainService {
     private final UserRepository userRepository;
 
     public boolean isDuplicateByEmail(final Email email) {
-        return userRepository.existsByEmail(email).block();
+        return Boolean.TRUE.equals(userRepository.existsByEmail(email).block());
     }
 }
