@@ -12,7 +12,7 @@ Configuration:
       name: ConsoleAppender
       target: SYSTEM_OUT
       PatternLayout:
-        pattern: '%yellow{%d{DEFAULT}} %p %magenta{%tn} %green{%F -> %M (line: %L)}%n==> %m%n-->%ex{full}%n'
+        pattern: '%yellow{%d{DEFAULT}} %p %magenta{%tn} %green{%F -> %M (line: %L)}%n==> %m%n'
     File:
     - name: FileAppender
       fileName: ${base-dir}/log/${filename}.log
@@ -40,6 +40,55 @@ Configuration:
 #      - ref: FileAppender
 #      - ref: HtmlAppender
     - name: org.springframework.r2dbc
+      level: debug
+      additivity: false
+      AppenderRef:
+      - ref: ConsoleAppender
+#      - ref: FileAppender
+#      - ref: HtmlAppender
+    - name: io.r2dbc
+      level: debug
+      additivity: false
+      AppenderRef:
+      - ref: ConsoleAppender
+#      - ref: FileAppender
+#      - ref: HtmlAppender
+    - name: org.springframework.data.r2dbc
+      level: debug
+      additivity: false
+      AppenderRef:
+      - ref: ConsoleAppender
+#      - ref: FileAppender
+#      - ref: HtmlAppender
+    - name: org.springframework.core.codec
+      level: debug
+      additivity: false
+      AppenderRef:
+      - ref: ConsoleAppender
+#      - ref: FileAppender
+#      - ref: HtmlAppender
+    - name: org.springframework.http
+      level: debug
+      additivity: false
+      AppenderRef:
+      - ref: ConsoleAppender
+#      - ref: FileAppender
+#      - ref: HtmlAppender
+    - name: org.springframework.web
+      level: debug
+      additivity: false
+      AppenderRef:
+      - ref: ConsoleAppender
+#      - ref: FileAppender
+#      - ref: HtmlAppender
+    - name: org.springframework.boot.actuate.endpoint.web
+      level: debug
+      additivity: false
+      AppenderRef:
+      - ref: ConsoleAppender
+#      - ref: FileAppender
+#      - ref: HtmlAppender
+    - name: org.springframework.boot.web.servlet.ServletContextInitializerBeans
       level: debug
       additivity: false
       AppenderRef:

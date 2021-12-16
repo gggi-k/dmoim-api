@@ -1,14 +1,30 @@
 package kr.dmoim.api.config.webflux;
 
+import lombok.RequiredArgsConstructor;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.reactive.config.CorsRegistry;
-import org.springframework.web.reactive.config.EnableWebFlux;
 import org.springframework.web.reactive.config.WebFluxConfigurer;
 
 @Configuration
-@EnableWebFlux
+@RequiredArgsConstructor
 public class WebFluxConfig implements WebFluxConfigurer {
+
+    private CorsConfiguration corsConfiguration;
+
+    @Bean
+    public CorsConfiguration corsConfiguration() {
+        final CorsConfiguration corsConfiguration = new CorsConfiguration();
+        corsConfiguration.addAllowedOriginPattern("http://localhost:8600");
+        corsConfiguration.addAllowedMethod(HttpMethod.GET);
+        corsConfiguration.addAllowedMethod(HttpMethod.POST);
+        corsConfiguration.addAllowedMethod(HttpMethod.PATCH);
+        corsConfiguration.addAllowedMethod(HttpMethod.PUT);
+        corsConfiguration.addAllowedMethod(HttpMethod.DELETE);
+        return this.corsConfiguration = corsConfiguration;
+    }
 
      /*@Override
     public void addFormatters(FormatterRegistry registry) {
@@ -19,17 +35,7 @@ public class WebFluxConfig implements WebFluxConfigurer {
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")
-                .allowedOrigins("http://localhost:8600")
-                .allowedHeaders(
-                    HttpHeaders.ACCESS_CONTROL_ALLOW_HEADERS,
-                    HttpHeaders.ACCESS_CONTROL_ALLOW_CREDENTIALS,
-                    HttpHeaders.ACCESS_CONTROL_ALLOW_METHODS,
-                    HttpHeaders.ACCESS_CONTROL_ALLOW_ORIGIN
-                )
-                .allowedMethods(
-                    "DELETE"
-                )
-                .allowCredentials(true);
+                .combine(corsConfiguration);
     }
 
     /*@Override

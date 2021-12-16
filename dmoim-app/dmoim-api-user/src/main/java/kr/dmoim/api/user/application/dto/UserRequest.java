@@ -9,9 +9,11 @@ import lombok.Setter;
 import lombok.ToString;
 import lombok.experimental.Accessors;
 
+import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import javax.validation.groups.ConvertGroup;
 
 @NoArgsConstructor(staticName = "create")
 @Getter
@@ -27,17 +29,18 @@ public class UserRequest {
     @Schema(description = "사용자 아이디", example = "test")
     private Long userId;
 
-    @NotBlank(groups = Create.class)
+    @ConvertGroup(to = Create.class)
+    @Valid
     @Schema(type = "String", description = "이메일", example = "test@dmoim.com")
     private Email email;
 
-    @NotBlank
-    @Size(groups = Create.class)
+    @NotBlank(groups = {Create.class, Update.class})
+    @Size(groups = Create.class, min = 3, max = 20)
     @Schema(description = "닉네임", example = "테스트네임")
     private String nickName;
 
-    @NotBlank
-    @Size(groups = Create.class)
+    @ConvertGroup(to = Create.class)
+    @Valid
     @Schema(type = "String", description = "설명", example = "test12345")
     private Password password;
 
