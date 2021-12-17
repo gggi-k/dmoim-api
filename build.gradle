@@ -12,6 +12,9 @@ buildscript {
         swaggerVersion = "1.5.10"
         poiVersion = "5.0.0"
         aopVersion = "2.5.6"
+        reflectionsVersion = "0.10.2"
+        jsoupVersion = "1.14.3"
+        log4jdbcVersion = "1.16"
         notUseModules = ArrayList.of(project(':dmoim-app'), project(':dmoim-cloud'), project(':dmoim-domain'))
     }
 
@@ -95,8 +98,10 @@ configure(useModules) {
 project(":dmoim-core") {
     dependencies {
         implementation "org.springframework.boot:spring-boot-starter-webflux"
+        implementation "org.springframework.boot:spring-boot-starter-data-r2dbc"
         implementation "org.springframework.boot:spring-boot-starter-aop:${aopVersion}"
         implementation "org.apache.poi:poi-ooxml:${poiVersion}"
+        implementation "org.reflections:reflections:${reflectionsVersion}"
 
         testImplementation "org.apache.poi:poi-ooxml:${poiVersion}"
     }
@@ -157,6 +162,7 @@ project(":dmoim-app:dmoim-batch") {
         implementation "org.springframework.boot:spring-boot-starter-batch"
         implementation "org.springframework.boot:spring-boot-starter-quartz"
         implementation "com.vaadin:vaadin-spring-boot-starter"
+        implementation "org.jsoup:jsoup:${jsoupVersion}"
 
     }
 
@@ -195,8 +201,8 @@ project(":dmoim-domain:dmoim-domain-user") {
     dependencies {
         implementation project(":dmoim-core")
         compile "org.springframework.boot:spring-boot-starter-data-r2dbc"
-        //runtimeOnly 'mysql:mysql-connector-java'
-        runtimeOnly "io.r2dbc:r2dbc-h2"
+        runtimeOnly 'mysql:mysql-connector-java'
+        runtimeOnly "dev.miku:r2dbc-mysql"
     }
 }
 

@@ -1,12 +1,3 @@
-spring:
-  r2dbc:
-    name: h2
-    username: user
-  sql:
-    init:
-      username: user
-      platform: h2
-      schema-locations: classpath:sql/schema-h2.sql
 
 
 

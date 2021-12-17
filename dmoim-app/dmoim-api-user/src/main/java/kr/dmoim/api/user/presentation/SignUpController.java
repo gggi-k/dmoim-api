@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 @Log4j2
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/api/sign-up")
+@RequestMapping("/api/v1/sign-up")
 @Tag(name = "회원가입", description = "등록")
 public class SignUpController {
 

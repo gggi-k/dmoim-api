@@ -48,11 +48,18 @@ logging:
 springdoc:
   swagger-ui:
     operations-sorter: method
+    display-query-params: true
+    display-request-duration: true
+    deep-linking: true
+    show-common-extensions: true
+    show-extensions: true
+    persist-authorization: true
     use-root-path: true
     filter: true
     try-it-out-enabled: true
     csrf:
       enabled: true
     urls:
-    - url: http://localhost:9000/api-docs/users
-      name: 사용자 API
+      - url: http://localhost:9000/api-docs/users
+        name: 사용자 API
+

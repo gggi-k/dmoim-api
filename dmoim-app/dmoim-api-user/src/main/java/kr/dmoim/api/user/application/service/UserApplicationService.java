@@ -3,6 +3,7 @@ package kr.dmoim.api.user.application.service;
 import kr.dmoim.api.user.application.dto.UserRequest;
 import kr.dmoim.api.user.application.dto.UserResponse;
 import kr.dmoim.core.exception.global.DuplicateException;
+import kr.dmoim.core.exception.global.NotFoundException;
 import kr.dmoim.domain.user.domain.entity.UserEntity;
 import kr.dmoim.domain.user.domain.service.UserDomainService;
 import kr.dmoim.domain.user.repository.UserRepository;
@@ -11,6 +12,8 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
+
+import java.util.Objects;
 
 @Log4j2
 @RequiredArgsConstructor
@@ -29,9 +32,9 @@ public class UserApplicationService {
                 .map(UserResponse::fromEntity);
     }
 
-    public Mono<UserResponse> create(UserRequest userRequest) {
+    public Mono<UserResponse> create(final UserRequest userRequest) {
 
-        if(userDomainService.isDuplicateByEmail(userRequest.getEmail())) throw new DuplicateException("중복된 정보가 존재합니다");
+        if(userDomainService.isDuplicateByEmail(userRequest.getEmail())) throw new DuplicateException("중복된 이메일이 존재합니다");
 
         return userRepository.save(UserEntity
                 .builder()
@@ -41,5 +44,35 @@ public class UserApplicationService {
                     .deleted(false)
                 .build())
                 .map(UserResponse::fromEntity);
+    }
+    public Mono<UserResponse> update(final UserRequest userRequest) {
+
+        final UserEntity userEntity = userRepository.findByUserIdAndDeletedFalse(userRequest.getUserId())
+                .blockOptional()
+                .orElseThrow(() -> new NotFoundException("유저 정보가 없습니다"));
+
+        if(!Objects.equals(userEntity.getEmail(), userRequest.getEmail()) && userDomainService.isDuplicateByEmail(userRequest.getEmail())) {
+            throw new DuplicateException("중복된 이메일이 존재합니다");
+        }
+
+        return userRepository.save(UserEntity
+                .builder()
+                    .email(userRequest.getEmail())
+                    .nickName(userRequest.getNickName())
+                .build())
+                .map(UserResponse::fromEntity);
+    }
+
+    public Mono<Boolean> changePassword(final UserRequest userRequest) {
+
+        userRepository.existsById(userRequest.getUserId())
+                .blockOptional()
+                .orElseThrow(() -> new NotFoundException("유저 정보가 없습니다"));
+
+        return userRepository.changePasswordByUserId(userRequest.getPassword(), userRequest.getUserId());
+    }
+
+    public Mono<Boolean> deleteById(final Long userId) {
+        return userRepository.deleteByUserId(userId);
     }
 }
