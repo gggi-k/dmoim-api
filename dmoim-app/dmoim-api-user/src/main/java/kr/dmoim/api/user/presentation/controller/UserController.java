@@ -1,4 +1,4 @@
-package kr.dmoim.api.user.presentation;
+package kr.dmoim.api.user.presentation.controller;
 
 import com.fasterxml.jackson.annotation.JsonView;
 import io.swagger.v3.oas.annotations.Hidden;
@@ -9,10 +9,11 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import kr.dmoim.api.user.application.dto.UserRequest;
-import kr.dmoim.api.user.application.dto.UserResponse;
-import kr.dmoim.api.user.application.dto.UserViews;
+import kr.dmoim.api.user.application.command.UserRequest;
+import kr.dmoim.api.user.application.response.UserResponse;
 import kr.dmoim.api.user.application.service.UserApplicationService;
+import kr.dmoim.api.user.presentation.valid.UserValid;
+import kr.dmoim.api.user.presentation.view.UserView;
 import kr.dmoim.core.domain.vo.Email;
 import kr.dmoim.core.domain.vo.Password;
 import kr.dmoim.core.excel.aspect.ExcelDownload;
@@ -40,13 +41,14 @@ public class UserController {
     private final MessageSourceAccessor message;
 
     @GetMapping
+    @JsonView(UserResponse.UserListView.class)
     @Operation(summary = "사용자목록 조회")
     public Flux<UserResponse> findAll () {
         return userApplicationService.findAll();
     }
 
     @GetMapping("/{userId}")
-    @JsonView(UserViews.List.class)
+    @JsonView(UserResponse.UserDetailView.class)
     @Operation(summary = "사용자 조회")
     @ApiResponses({
         @ApiResponse(responseCode = "200", description = "데이터가 존재합니다"),
@@ -63,11 +65,12 @@ public class UserController {
         @ApiResponse(responseCode = "409", description = "중복된 이메일 존재합니다")
     })
     public void isDuplicateByUserId (@Parameter(description = "이메일") @PathVariable final Email email) {
-        if(userDomainService.isDuplicateByEmail(email)) throw new DuplicateException("중복된 이메일 존재합니다");
+        if(userDomainService.isDuplicateByEmail(email).block()) throw new DuplicateException("중복된 이메일 존재합니다");
     }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
+    @JsonView(UserView.Create.class)
     @Operation(summary = "사용자 생성")
     @ApiResponses({
         @ApiResponse(responseCode = "201",
@@ -77,15 +80,16 @@ public class UserController {
                 description = "생성 주소"
             ))
     })
-    public Mono<UserResponse> create (@RequestBody @Validated(UserRequest.Create.class) UserRequest userRequest) {
+    public Mono<UserResponse> create (@RequestBody @Validated(UserValid.Create.class) UserRequest userRequest) {
         return userApplicationService.create(userRequest);
     }
 
     @PutMapping("/{userId}")
     @ResponseStatus(HttpStatus.CREATED)
+    @JsonView(UserView.Update.class)
     @Operation(summary = "사용자 수정")
     public Mono<UserResponse> updateById (@Parameter(description = "사용자 아이디") @PathVariable final Long userId,
-                            @RequestBody @Validated(UserRequest.Update.class) UserRequest userRequest) {
+                            @RequestBody @Validated(UserValid.Update.class) UserRequest userRequest) {
 
         return userApplicationService.update(userRequest.setUserId(userId));
     }

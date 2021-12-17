@@ -1,10 +1,10 @@
-package kr.dmoim.api.user.application.dto;
+package kr.dmoim.api.user.application.response;
 
 
 import com.fasterxml.jackson.annotation.JsonView;
 import io.swagger.v3.oas.annotations.media.Schema;
-import kr.dmoim.domain.user.domain.entity.UserEntity;
 import kr.dmoim.core.domain.vo.Email;
+import kr.dmoim.domain.user.domain.entity.UserEntity;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.ToString;
@@ -16,38 +16,43 @@ import java.time.LocalDateTime;
 @ToString
 public class UserResponse {
 
-    @JsonView(UserViews.List.class)
+    public interface UserListView {}
+    public interface UserDetailView {}
+
+    @JsonView({UserListView.class, UserDetailView.class})
     @Schema(description = "사용자아이디")
     private final Long userId;
 
-    @JsonView(UserViews.List.class)
+    @JsonView({UserListView.class, UserDetailView.class})
     @Schema(description = "이메일")
     private final Email email;
 
-    @JsonView(UserViews.List.class)
+    @JsonView({UserListView.class, UserDetailView.class})
     @Schema(description = "닉네임")
     private final String nickName;
 
-    @JsonView(UserViews.List.class)
+    @JsonView(UserListView.class)
     @Schema(description = "삭제여부")
     private final Boolean deleted;
 
-    @JsonView(UserViews.List.class)
+    @JsonView(UserDetailView.class)
     @Schema(description = "버전")
     private final Long version;
 
-    @JsonView(UserViews.List.class)
+    @JsonView(UserListView.class)
     @Schema(description = "생성자")
     private final Long createdBy;
 
-    @JsonView(UserViews.List.class)
+    @JsonView({UserListView.class, UserDetailView.class})
     @Schema(description = "생성일시")
     private final LocalDateTime createdAt;
 
-    /*@Schema(description = "갱신자")*/
+    @JsonView(UserListView.class)
+    @Schema(description = "갱신자")
     private final Long updatedBy;
 
-    /*@Schema(description = "갱신일시")*/
+    @JsonView({UserListView.class, UserDetailView.class})
+    @Schema(description = "갱신일시")
     private final LocalDateTime updatedAt;
 
 

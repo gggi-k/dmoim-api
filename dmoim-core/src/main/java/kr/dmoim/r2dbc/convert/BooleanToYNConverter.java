@@ -4,7 +4,7 @@ import org.springframework.core.convert.converter.Converter;
 import org.springframework.data.convert.ReadingConverter;
 import org.springframework.data.convert.WritingConverter;
 
-public class YNConverter {
+public class BooleanToYNConverter {
 
     private static final String TRUE = "Y", FALSE = "N";
 

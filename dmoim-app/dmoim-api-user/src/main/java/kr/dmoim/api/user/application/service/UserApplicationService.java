@@ -1,7 +1,7 @@
 package kr.dmoim.api.user.application.service;
 
-import kr.dmoim.api.user.application.dto.UserRequest;
-import kr.dmoim.api.user.application.dto.UserResponse;
+import kr.dmoim.api.user.application.command.UserRequest;
+import kr.dmoim.api.user.application.response.UserResponse;
 import kr.dmoim.core.exception.global.DuplicateException;
 import kr.dmoim.core.exception.global.NotFoundException;
 import kr.dmoim.domain.user.domain.entity.UserEntity;
@@ -34,7 +34,7 @@ public class UserApplicationService {
 
     public Mono<UserResponse> create(final UserRequest userRequest) {
 
-        if(userDomainService.isDuplicateByEmail(userRequest.getEmail())) throw new DuplicateException("중복된 이메일이 존재합니다");
+        if(userDomainService.isDuplicateByEmail(userRequest.getEmail()).block()) throw new DuplicateException("중복된 이메일이 존재합니다");
 
         return userRepository.save(UserEntity
                 .builder()
@@ -51,7 +51,7 @@ public class UserApplicationService {
                 .blockOptional()
                 .orElseThrow(() -> new NotFoundException("유저 정보가 없습니다"));
 
-        if(!Objects.equals(userEntity.getEmail(), userRequest.getEmail()) && userDomainService.isDuplicateByEmail(userRequest.getEmail())) {
+        if(!Objects.equals(userEntity.getEmail(), userRequest.getEmail()) && userDomainService.isDuplicateByEmail(userRequest.getEmail()).block()) {
             throw new DuplicateException("중복된 이메일이 존재합니다");
         }
 

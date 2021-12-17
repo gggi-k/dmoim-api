@@ -3,7 +3,7 @@ package kr.dmoim.domain.cofing;
 import io.r2dbc.spi.ConnectionFactories;
 import io.r2dbc.spi.ConnectionFactory;
 import io.r2dbc.spi.ConnectionFactoryOptions;
-import kr.dmoim.r2dbc.convert.YNConverter;
+import kr.dmoim.r2dbc.convert.BooleanToYNConverter;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -41,8 +41,8 @@ public class UserR2dbcConfig extends AbstractR2dbcConfiguration {
     @Override
     protected List<Object> getCustomConverters() {
         return List.of(
-            new YNConverter.YNReadConverter(),
-            new YNConverter.YNWriteConverter()
+            new BooleanToYNConverter.YNReadConverter(),
+            new BooleanToYNConverter.YNWriteConverter()
         );
     }
 

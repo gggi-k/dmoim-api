@@ -1,6 +1,6 @@
 package kr.dmoim.test.controller;
 
-import kr.dmoim.api.user.presentation.UserController;
+import kr.dmoim.api.user.presentation.controller.UserController;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
