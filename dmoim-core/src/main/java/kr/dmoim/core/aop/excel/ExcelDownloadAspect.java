@@ -1,4 +1,4 @@
-package kr.dmoim.core.excel.aspect;
+package kr.dmoim.core.aop.excel;
 
 import kr.dmoim.core.excel.task.ExcelDownloadExecutor;
 import lombok.RequiredArgsConstructor;
@@ -18,9 +18,8 @@ public class ExcelDownloadAspect {
 
     private final ExcelDownloadExecutor excelDownloadExecutor;
 
-    @AfterReturning(value = "@annotation(kr.dmoim.core.excel.aspect.ExcelDownload)")
+    @AfterReturning(value = "@annotation(kr.dmoim.core.aop.excel.ExcelDownload)")
     public void excelDownloadAfterReturn(JoinPoint joinpoint) throws IOException {
-        System.out.println("@#$@#$#@$@#");
         excelDownloadExecutor.excelDownload(null);
     }
 }

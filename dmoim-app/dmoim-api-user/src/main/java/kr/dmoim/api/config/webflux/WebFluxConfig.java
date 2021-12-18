@@ -1,13 +1,13 @@
 package kr.dmoim.api.config.webflux;
 
-import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.convert.converter.ConverterFactory;
-import org.springframework.format.FormatterRegistry;
 import org.springframework.http.HttpMethod;
+import org.springframework.http.MediaType;
 import org.springframework.http.codec.ServerCodecConfigurer;
 import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.reactive.accept.RequestedContentTypeResolverBuilder;
 import org.springframework.web.reactive.config.CorsRegistry;
 import org.springframework.web.reactive.config.EnableWebFlux;
 import org.springframework.web.reactive.config.WebFluxConfigurer;
@@ -18,6 +18,7 @@ import java.time.Duration;
 @EnableWebFlux
 public class WebFluxConfig implements WebFluxConfigurer {
 
+    @Autowired
     private CorsConfiguration corsConfiguration;
 
     @Bean
@@ -30,7 +31,7 @@ public class WebFluxConfig implements WebFluxConfigurer {
         corsConfiguration.addAllowedMethod(HttpMethod.PUT);
         corsConfiguration.addAllowedMethod(HttpMethod.DELETE);
         corsConfiguration.setMaxAge(Duration.ofDays(1));
-        return this.corsConfiguration = corsConfiguration;
+        return corsConfiguration;
     }
 
     @Override
@@ -44,4 +45,8 @@ public class WebFluxConfig implements WebFluxConfigurer {
         configurer.defaultCodecs().enableLoggingRequestDetails(true);
     }
 
+    @Override
+    public void configureContentTypeResolver(RequestedContentTypeResolverBuilder builder) {
+        builder.fixedResolver(MediaType.TEXT_EVENT_STREAM, MediaType.APPLICATION_JSON, MediaType.APPLICATION_NDJSON);
+    }
 }

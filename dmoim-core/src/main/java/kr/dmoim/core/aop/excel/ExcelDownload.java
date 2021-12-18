@@ -1,4 +1,4 @@
-package kr.dmoim.core.excel.aspect;
+package kr.dmoim.core.aop.excel;
 
 import java.lang.annotation.*;
 

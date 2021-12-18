@@ -2,8 +2,6 @@ package kr.dmoim.api.user.application.command;
 
 import com.fasterxml.jackson.annotation.JsonView;
 import io.swagger.v3.oas.annotations.media.Schema;
-import kr.dmoim.api.user.application.response.UserResponse;
-import kr.dmoim.api.user.presentation.valid.UserValid;
 import kr.dmoim.api.user.presentation.view.UserView;
 import kr.dmoim.core.domain.vo.Email;
 import kr.dmoim.core.domain.vo.Password;
@@ -27,31 +25,31 @@ import javax.validation.groups.ConvertGroup;
 public class UserRequest {
 
 
-    @NotNull(groups = UserValid.Update.class)
-    @JsonView(UserValid.Update.class)
+    @NotNull(groups = UserView.Update.class)
+    @JsonView(UserView.Update.class)
     @Schema(description = "사용자 아이디", example = "test")
     private Long userId;
 
-    @ConvertGroup(to = UserValid.Create.class)
+    @ConvertGroup(to = UserView.Create.class)
     @Valid
-    @JsonView(UserValid.Create.class)
+    @JsonView(UserView.Create.class)
     @Schema(type = "String", description = "이메일", example = "test@dmoim.com")
     private Email email;
 
-    @NotBlank(groups = {UserValid.Create.class, UserValid.Update.class})
-    @Size(groups = {UserValid.Create.class, UserValid.Update.class}, min = 3, max = 20)
-    @JsonView({UserValid.Create.class, UserValid.Update.class})
+    @NotBlank(groups = {UserView.Create.class, UserView.Update.class})
+    @Size(groups = {UserView.Create.class, UserView.Update.class}, min = 3, max = 20)
+    @JsonView({UserView.Create.class, UserView.Update.class})
     @Schema(description = "닉네임", example = "테스트네임")
     private String nickName;
 
-    @ConvertGroup(to = UserValid.Create.class)
+    @ConvertGroup(to = UserView.Create.class)
     @Valid
-    @JsonView(UserValid.Create.class)
+    @JsonView(UserView.Create.class)
     @Schema(type = "String", description = "설명", example = "test12345")
     private Password password;
 
-    @NotNull(groups = UserValid.Update.class)
-    @JsonView(UserValid.Update.class)
+    @NotNull(groups = UserView.Update.class)
+    @JsonView(UserView.Update.class)
     @Schema(description = "버전")
     private Long version;
 }

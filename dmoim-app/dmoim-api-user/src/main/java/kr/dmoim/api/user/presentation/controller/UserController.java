@@ -12,11 +12,10 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import kr.dmoim.api.user.application.command.UserRequest;
 import kr.dmoim.api.user.application.response.UserResponse;
 import kr.dmoim.api.user.application.service.UserApplicationService;
-import kr.dmoim.api.user.presentation.valid.UserValid;
 import kr.dmoim.api.user.presentation.view.UserView;
 import kr.dmoim.core.domain.vo.Email;
 import kr.dmoim.core.domain.vo.Password;
-import kr.dmoim.core.excel.aspect.ExcelDownload;
+import kr.dmoim.core.aop.excel.ExcelDownload;
 import kr.dmoim.core.exception.global.DuplicateException;
 import kr.dmoim.domain.user.domain.service.UserDomainService;
 import lombok.RequiredArgsConstructor;
@@ -24,10 +23,15 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.context.support.MessageSourceAccessor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.Errors;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
+
+import javax.validation.Valid;
 
 @Log4j2
 @RequiredArgsConstructor
@@ -40,15 +44,19 @@ public class UserController {
     private final UserDomainService userDomainService;
     private final MessageSourceAccessor message;
 
+    @InitBinder
+    private void initBinder(WebDataBinder webDataBinder) {
+    }
+
     @GetMapping
-    @JsonView(UserResponse.UserListView.class)
+    @JsonView(UserView.List.class)
     @Operation(summary = "사용자목록 조회")
     public Flux<UserResponse> findAll () {
         return userApplicationService.findAll();
     }
 
     @GetMapping("/{userId}")
-    @JsonView(UserResponse.UserDetailView.class)
+    @JsonView(UserView.Detail.class)
     @Operation(summary = "사용자 조회")
     @ApiResponses({
         @ApiResponse(responseCode = "200", description = "데이터가 존재합니다"),
@@ -80,7 +88,7 @@ public class UserController {
                 description = "생성 주소"
             ))
     })
-    public Mono<UserResponse> create (@RequestBody @Validated(UserValid.Create.class) UserRequest userRequest) {
+    public Mono<UserResponse> create (@RequestBody @Validated(UserView.Create.class) UserRequest userRequest, Errors errors, BindingResult bindingResult) {
         return userApplicationService.create(userRequest);
     }
 
@@ -89,7 +97,7 @@ public class UserController {
     @JsonView(UserView.Update.class)
     @Operation(summary = "사용자 수정")
     public Mono<UserResponse> updateById (@Parameter(description = "사용자 아이디") @PathVariable final Long userId,
-                            @RequestBody @Validated(UserValid.Update.class) UserRequest userRequest) {
+                            @RequestBody @Validated(UserView.Update.class) UserRequest userRequest) {
 
         return userApplicationService.update(userRequest.setUserId(userId));
     }
@@ -102,11 +110,11 @@ public class UserController {
         @ApiResponse(responseCode = "204", description = "비밀번호가 변경되었습니다"),
         @ApiResponse(responseCode = "404", description = "존재하지않는 사용자입니다")
     })
-    public void changePassword(@Parameter(description = "사용자 아이디") @PathVariable final Long userId, @RequestBody final String password) {
+    public void changePassword(@Parameter(description = "사용자 아이디") @PathVariable final Long userId, @RequestBody @Valid final Password password) {
 
         userApplicationService.changePassword(UserRequest.create()
                 .setUserId(userId)
-                .setPassword(Password.valueOf(password))
+                .setPassword(password)
         );
     }
 
