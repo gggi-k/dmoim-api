@@ -13,9 +13,9 @@ import kr.dmoim.api.user.application.command.UserRequest;
 import kr.dmoim.api.user.application.response.UserResponse;
 import kr.dmoim.api.user.application.service.UserApplicationService;
 import kr.dmoim.api.user.presentation.view.UserView;
+import kr.dmoim.core.aop.excel.ExcelDownload;
 import kr.dmoim.core.domain.vo.Email;
 import kr.dmoim.core.domain.vo.Password;
-import kr.dmoim.core.aop.excel.ExcelDownload;
 import kr.dmoim.core.exception.global.DuplicateException;
 import kr.dmoim.domain.user.domain.service.UserDomainService;
 import lombok.RequiredArgsConstructor;
@@ -23,10 +23,7 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.context.support.MessageSourceAccessor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.Errors;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
@@ -43,10 +40,6 @@ public class UserController {
     private final UserApplicationService userApplicationService;
     private final UserDomainService userDomainService;
     private final MessageSourceAccessor message;
-
-    @InitBinder
-    private void initBinder(WebDataBinder webDataBinder) {
-    }
 
     @GetMapping
     @JsonView(UserView.List.class)
@@ -79,25 +72,24 @@ public class UserController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     @JsonView(UserView.Create.class)
+    @Validated(UserView.Create.class)
     @Operation(summary = "사용자 생성")
     @ApiResponses({
         @ApiResponse(responseCode = "201",
             description = "사용자 생성되었습니다",
-            headers = @Header(
-                name = HttpHeaders.LOCATION,
-                description = "생성 주소"
-            ))
+            headers = @Header(name = HttpHeaders.LOCATION, description = "생성 주소"))
     })
-    public Mono<UserResponse> create (@RequestBody @Validated(UserView.Create.class) UserRequest userRequest, Errors errors, BindingResult bindingResult) {
+    public Mono<UserResponse> create (@RequestBody UserRequest userRequest) {
         return userApplicationService.create(userRequest);
     }
 
     @PutMapping("/{userId}")
     @ResponseStatus(HttpStatus.CREATED)
     @JsonView(UserView.Update.class)
+    @Validated(UserView.Update.class)
     @Operation(summary = "사용자 수정")
     public Mono<UserResponse> updateById (@Parameter(description = "사용자 아이디") @PathVariable final Long userId,
-                            @RequestBody @Validated(UserView.Update.class) UserRequest userRequest) {
+                            @RequestBody UserRequest userRequest) {
 
         return userApplicationService.update(userRequest.setUserId(userId));
     }

@@ -3,6 +3,7 @@ package kr.dmoim.api.user.application.command;
 import com.fasterxml.jackson.annotation.JsonView;
 import io.swagger.v3.oas.annotations.media.Schema;
 import kr.dmoim.api.user.presentation.view.UserView;
+import kr.dmoim.core.bind.annotation.ClientIp;
 import kr.dmoim.core.domain.vo.Email;
 import kr.dmoim.core.domain.vo.Password;
 import lombok.Getter;
@@ -45,11 +46,16 @@ public class UserRequest {
     @ConvertGroup(to = UserView.Create.class)
     @Valid
     @JsonView(UserView.Create.class)
-    @Schema(type = "String", description = "설명", example = "test12345")
+    @Schema(type = "string", format = "password", description = "설명", example = "test12345")
     private Password password;
 
     @NotNull(groups = UserView.Update.class)
     @JsonView(UserView.Update.class)
     @Schema(description = "버전")
     private Long version;
+
+    @ClientIp
+    @JsonView({UserView.Create.class, UserView.Update.class})
+    @Schema(hidden = true)
+    private String clientIp;
 }

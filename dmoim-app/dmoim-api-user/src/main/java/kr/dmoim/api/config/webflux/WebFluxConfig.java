@@ -1,5 +1,6 @@
 package kr.dmoim.api.config.webflux;
 
+import kr.dmoim.core.bind.resolver.ClientIpArgumentResolver;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -8,9 +9,8 @@ import org.springframework.http.MediaType;
 import org.springframework.http.codec.ServerCodecConfigurer;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.reactive.accept.RequestedContentTypeResolverBuilder;
-import org.springframework.web.reactive.config.CorsRegistry;
-import org.springframework.web.reactive.config.EnableWebFlux;
-import org.springframework.web.reactive.config.WebFluxConfigurer;
+import org.springframework.web.reactive.config.*;
+import org.springframework.web.reactive.result.method.annotation.ArgumentResolverConfigurer;
 
 import java.time.Duration;
 
@@ -48,5 +48,18 @@ public class WebFluxConfig implements WebFluxConfigurer {
     @Override
     public void configureContentTypeResolver(RequestedContentTypeResolverBuilder builder) {
         builder.fixedResolver(MediaType.TEXT_EVENT_STREAM, MediaType.APPLICATION_JSON, MediaType.APPLICATION_NDJSON);
+    }
+
+
+    @Override
+    public void addResourceHandlers(ResourceHandlerRegistry registry) {
+        registry.addResourceHandler("/image/**")
+                .addResourceLocations("")
+                .setCacheControl(null);
+    }
+
+    @Override
+    public void configureArgumentResolvers(ArgumentResolverConfigurer configurer) {
+        configurer.addCustomResolver(new ClientIpArgumentResolver());
     }
 }
