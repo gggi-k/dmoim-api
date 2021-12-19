@@ -13,7 +13,7 @@ public class BooleanToYNConverter {
 
         @Override
         public Boolean convert(String source) {
-            return TRUE.equals(source);
+            return TRUE.equalsIgnoreCase(source);
         }
     }
 

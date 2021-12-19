@@ -34,7 +34,10 @@ public class UserApplicationService {
 
     public Mono<UserResponse> create(final UserRequest userRequest) {
 
-        if(userDomainService.isDuplicateByEmail(userRequest.getEmail()).block()) throw new DuplicateException("중복된 이메일이 존재합니다");
+        /*userDomainService.isDuplicateByEmail(userRequest.getEmail())
+                .subscribe(isDuplicate -> {
+                    if(isDuplicate) Mono.error(new DuplicateException("중복된 이메일이 존재합니다"));
+                });*/
 
         return userRepository.save(UserEntity
                 .builder()

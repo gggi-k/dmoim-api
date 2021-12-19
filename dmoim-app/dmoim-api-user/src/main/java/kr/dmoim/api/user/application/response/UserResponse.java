@@ -61,6 +61,7 @@ public class UserResponse {
                     .email(userEntity.getEmail())
                     .nickName(userEntity.getNickName())
                     .version(userEntity.getVersion())
+                    .deleted(userEntity.getDeleted())
                     .createdBy(userEntity.getCreatedBy())
                     .createdAt(userEntity.getCreatedAt())
                     .updatedBy(userEntity.getUpdatedBy())

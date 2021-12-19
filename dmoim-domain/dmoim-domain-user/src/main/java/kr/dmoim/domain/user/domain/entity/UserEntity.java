@@ -11,14 +11,15 @@ import org.springframework.data.relational.core.mapping.Table;
 
 @Getter
 @SuperBuilder
-@AllArgsConstructor(access = AccessLevel.PRIVATE)
+@AllArgsConstructor
+@NoArgsConstructor
 @ToString
 @Table("USER_TB")
 public class UserEntity extends BaseEntity {
 
     @Id
     @Column(value = "USER_ID")
-    private final Long userId;
+    private Long userId;
 
     @Column(value = "EMAIL")
     private Email email;

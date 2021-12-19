@@ -4,6 +4,8 @@ import io.r2dbc.spi.ConnectionFactories;
 import io.r2dbc.spi.ConnectionFactory;
 import io.r2dbc.spi.ConnectionFactoryOptions;
 import kr.dmoim.r2dbc.convert.BooleanToYNConverter;
+import kr.dmoim.r2dbc.convert.EmailToStringConverter;
+import kr.dmoim.r2dbc.convert.PasswordToStringConverter;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -42,7 +44,11 @@ public class UserR2dbcConfig extends AbstractR2dbcConfiguration {
     protected List<Object> getCustomConverters() {
         return List.of(
             new BooleanToYNConverter.YNReadConverter(),
-            new BooleanToYNConverter.YNWriteConverter()
+            new BooleanToYNConverter.YNWriteConverter(),
+            new EmailToStringConverter.EmailReadConverter(),
+            new EmailToStringConverter.EmailReadConverter(),
+            new PasswordToStringConverter.PasswordReadConverter(),
+            new PasswordToStringConverter.PasswordWriteConverter()
         );
     }
 

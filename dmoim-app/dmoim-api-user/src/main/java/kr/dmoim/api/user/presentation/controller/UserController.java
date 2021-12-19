@@ -66,7 +66,10 @@ public class UserController {
         @ApiResponse(responseCode = "409", description = "중복된 이메일 존재합니다")
     })
     public void isDuplicateByUserId (@Parameter(description = "이메일") @PathVariable final Email email) {
-        if(userDomainService.isDuplicateByEmail(email).block()) throw new DuplicateException("중복된 이메일 존재합니다");
+        userDomainService.isDuplicateByEmail(email)
+                .subscribe(isDuplicate -> {
+                    if(isDuplicate) Mono.error(new DuplicateException("중복된 이메일이 존재합니다"));
+                });
     }
 
     @PostMapping
