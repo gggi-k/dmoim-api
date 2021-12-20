@@ -8,4 +8,6 @@ import java.lang.annotation.*;
 public @interface ExcelSheet {
 
     String sheetName();
+
+    int startBodyRow() default 1;
 }
