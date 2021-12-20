@@ -46,7 +46,7 @@ public class UserR2dbcConfig extends AbstractR2dbcConfiguration {
             new BooleanToYNConverter.YNReadConverter(),
             new BooleanToYNConverter.YNWriteConverter(),
             new EmailToStringConverter.EmailReadConverter(),
-            new EmailToStringConverter.EmailReadConverter(),
+            new EmailToStringConverter.EmailWriteConverter(),
             new PasswordToStringConverter.PasswordReadConverter(),
             new PasswordToStringConverter.PasswordWriteConverter()
         );

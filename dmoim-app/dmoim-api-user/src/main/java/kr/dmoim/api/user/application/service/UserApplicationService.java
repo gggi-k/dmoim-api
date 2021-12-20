@@ -9,6 +9,7 @@ import kr.dmoim.domain.user.domain.service.UserDomainService;
 import kr.dmoim.domain.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.context.support.MessageSourceAccessor;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
@@ -22,6 +23,7 @@ public class UserApplicationService {
 
     private final UserDomainService userDomainService;
     private final UserRepository userRepository;
+    private final MessageSourceAccessor message;
 
     public Flux<UserResponse> findAll() {
         return userRepository.findAll().map(UserResponse::fromEntity);
@@ -29,6 +31,7 @@ public class UserApplicationService {
 
     public Mono<UserResponse> findById(final Long id) {
         return userRepository.findById(id)
+                .switchIfEmpty(Mono.error(new NotFoundException(message.getMessage("user.notfound"))))
                 .map(UserResponse::fromEntity);
     }
 
@@ -51,8 +54,8 @@ public class UserApplicationService {
     public Mono<UserResponse> update(final UserRequest userRequest) {
 
         final UserEntity userEntity = userRepository.findByUserIdAndDeletedFalse(userRequest.getUserId())
-                .blockOptional()
-                .orElseThrow(() -> new NotFoundException("유저 정보가 없습니다"));
+                .switchIfEmpty(Mono.error(new NotFoundException(message.getMessage("user.notfound"))))
+                .block();
 
         if(!Objects.equals(userEntity.getEmail(), userRequest.getEmail()) && userDomainService.isDuplicateByEmail(userRequest.getEmail()).block()) {
             throw new DuplicateException("중복된 이메일이 존재합니다");
@@ -69,8 +72,7 @@ public class UserApplicationService {
     public Mono<Boolean> changePassword(final UserRequest userRequest) {
 
         userRepository.existsById(userRequest.getUserId())
-                .blockOptional()
-                .orElseThrow(() -> new NotFoundException("유저 정보가 없습니다"));
+                .switchIfEmpty(Mono.error(new NotFoundException(message.getMessage("user.notfound"))));
 
         return userRepository.changePasswordByUserId(userRequest.getPassword(), userRequest.getUserId());
     }
