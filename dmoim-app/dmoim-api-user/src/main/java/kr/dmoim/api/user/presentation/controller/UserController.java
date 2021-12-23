@@ -6,6 +6,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.headers.Header;
 import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -65,11 +66,10 @@ public class UserController {
         @ApiResponse(responseCode = "200", description = "중복된 이메일이 존재하지않습니다"),
         @ApiResponse(responseCode = "409", description = "중복된 이메일 존재합니다")
     })
-    public void isDuplicateByUserId (@Parameter(description = "이메일") @PathVariable final Email email) {
-        userDomainService.isDuplicateByEmail(email)
-                .subscribe(isDuplicate -> {
-                    if(isDuplicate) Mono.error(new DuplicateException("중복된 이메일이 존재합니다"));
-                });
+    public Mono<Boolean> isDuplicateByUserId (@Parameter(description = "이메일") @PathVariable final Email email) {
+        return userDomainService.isDuplicateByEmail(email).doOnSuccess(aBoolean -> {
+            if(aBoolean) Mono.error(new DuplicateException("이메일이 중복됩니다"));
+        });
     }
 
     @PostMapping
@@ -105,9 +105,8 @@ public class UserController {
         @ApiResponse(responseCode = "204", description = "비밀번호가 변경되었습니다"),
         @ApiResponse(responseCode = "404", description = "존재하지않는 사용자입니다")
     })
-    public void changePassword(@Parameter(description = "사용자 아이디") @PathVariable final Long userId, @RequestBody @Valid final Password password) {
-
-        userApplicationService.changePassword(UserRequest.create()
+    public Mono<Boolean> changePassword(@Parameter(description = "사용자 아이디") @PathVariable final Long userId, @RequestBody @Valid @Schema(type = "string") final Password password) {
+        return userApplicationService.changePassword(UserRequest.create()
                 .setUserId(userId)
                 .setPassword(password)
         );
@@ -120,8 +119,8 @@ public class UserController {
         @ApiResponse(responseCode = "204", description = "사용자가 삭제되었습니다"),
         @ApiResponse(responseCode = "404", description = "존재하지않는 사용자입니다")
     })
-    public void removeById (@Parameter(description = "사용자 아이디") @PathVariable final Long userId) {
-        userApplicationService.deleteById(userId);
+    public Mono<Boolean> removeById (@Parameter(description = "사용자 아이디") @PathVariable final Long userId) {
+        return userApplicationService.deleteById(userId);
     }
 
     @Hidden
