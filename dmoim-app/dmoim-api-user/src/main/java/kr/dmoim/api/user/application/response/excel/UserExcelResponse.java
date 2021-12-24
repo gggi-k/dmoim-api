@@ -1,5 +1,6 @@
 package kr.dmoim.api.user.application.response.excel;
 
+import kr.dmoim.core.excel.annotation.ExcelBodyCell;
 import kr.dmoim.core.excel.annotation.ExcelHeaderCell;
 import kr.dmoim.core.excel.annotation.ExcelSheet;
 import kr.dmoim.domain.user.domain.entity.UserEntity;
@@ -19,18 +20,23 @@ import java.util.stream.Collectors;
 public class UserExcelResponse {
 
     @ExcelHeaderCell(headerName = "사용자 아이디")
+    @ExcelBodyCell
     private final Long userId;
 
     @ExcelHeaderCell(headerName = "이메일")
+    @ExcelBodyCell
     private final String email;
 
     @ExcelHeaderCell(headerName = "닉네임")
+    @ExcelBodyCell
     private final String nickName;
 
     @ExcelHeaderCell(headerName = "등록일시")
+    @ExcelBodyCell
     private final LocalDateTime createdAt;
 
     @ExcelHeaderCell(headerName = "수정일시")
+    @ExcelBodyCell
     private final LocalDateTime updatedAt;
 
     public static UserExcelResponse fromEntity(UserEntity userEntity) {

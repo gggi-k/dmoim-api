@@ -12,6 +12,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import kr.dmoim.api.user.application.command.UserRequest;
 import kr.dmoim.api.user.application.response.UserResponse;
+import kr.dmoim.api.user.application.response.excel.UserExcelResponse;
 import kr.dmoim.api.user.application.service.UserApplicationService;
 import kr.dmoim.api.user.presentation.view.UserView;
 import kr.dmoim.core.aop.excel.ExcelDownload;
@@ -128,7 +129,7 @@ public class UserController {
     @ResponseStatus(HttpStatus.OK)
     @Operation(summary = "사용자 엑셀 다운로드")
     @ExcelDownload(workbookName = "워크북 테스트")
-    public String downloadUserExcel () {
-        return null;
+    public Flux<UserExcelResponse> downloadUserExcel () {
+        return userApplicationService.findAllForExcel();
     }
 }

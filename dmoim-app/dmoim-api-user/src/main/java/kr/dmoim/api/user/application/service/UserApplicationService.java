@@ -2,6 +2,7 @@ package kr.dmoim.api.user.application.service;
 
 import kr.dmoim.api.user.application.command.UserRequest;
 import kr.dmoim.api.user.application.response.UserResponse;
+import kr.dmoim.api.user.application.response.excel.UserExcelResponse;
 import kr.dmoim.core.exception.global.DuplicateException;
 import kr.dmoim.core.exception.global.NotFoundException;
 import kr.dmoim.domain.user.domain.entity.UserEntity;
@@ -30,7 +31,7 @@ public class UserApplicationService {
     }
 
     public Mono<UserResponse> findById(final Long id) {
-        return userRepository.findById(id)
+        return userRepository.findByUserIdAndDeletedFalse(id)
                 .switchIfEmpty(Mono.error(new NotFoundException(message.getMessage("user.notfound"))))
                 .map(UserResponse::fromEntity);
     }
@@ -79,5 +80,10 @@ public class UserApplicationService {
 
     public Mono<Boolean> deleteById(final Long userId) {
         return userRepository.deleteByUserId(userId);
+    }
+
+
+    public Flux<UserExcelResponse> findAllForExcel() {
+        return userRepository.findAll().map(UserExcelResponse::fromEntity);
     }
 }
