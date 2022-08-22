@@ -6,6 +6,10 @@
 MSA형태로 도전해보고자 하는 마음에 준비한 프로젝트입니다
 당시 개발진행할때 현업업무가 바쁜관계로 중지했던 프로젝트
 
+### ERD
+------------
+[ERDCLOUD](https://www.erdcloud.com/d/28Q9fNsp3yFun5wrM)
+
 ### Skill
 ----------
 * Java11
