@@ -19,7 +19,7 @@ MSA형태로 도전해보고자 하는 마음에 준비한 프로젝트입니다
 * Lombok - 어노테이션 프로세싱을 통한 코드 간단화
 * Swagger - Spring Gateway에 서비스별 apidocs를 노출
 * Spring Gateway - 서비스별 통신을 하나로 통합하기위해 MSA 필수요건
-* Spring Config - MSA 개발시 프로퍼티값이 배포로만 인해서 제한되니 
+* Spring Config - MSA 개발시 프로퍼티값이 배포로만 인해서 제한되니 별도 Git을 통한 변경
 * Spring Boot Admin - 어플리케이션 모니터링 상태
 * Spring Oauth Authorization - Oauth2 Authorization 구에서 Spring에서 deprecated되고 필요로 인해 다시 spring진영에서 개발 버전이 낮은편;; (https://spring.io/projects/spring-authorization-server)
 * Spring Batch - 대용량처리를 위해 도입하였으면 미개발상태
