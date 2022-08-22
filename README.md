@@ -13,6 +13,7 @@ MSA형태로 도전해보고자 하는 마음에 준비한 프로젝트입니다
 * R2dbc - 비동기, 논블러킹 환경제공
 * JPA - R2dbc가 아직 ORM처럼 지원이 충족된다고 생각하지않으며, 일부 도메인별로는 JPA 도입시도
 * Lombok - 어노테이션 프로세싱을 통한 코드 간단화
+* Swagger - Spring Gateway에 서비스별 apidocs를 노출
 * Spring Gateway - 서비스별 통신을 하나로 통합하기위해 MSA 필수요건
 * Spring Config - MSA 개발시 프로퍼티값이 배포로만 인해서 제한되니 
 * Spring Boot Admin - 어플리케이션 모니터링 상태
